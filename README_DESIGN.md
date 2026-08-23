@@ -1,10 +1,10 @@
-# OpenKey (v1.0.0) - Bản DinhPhuu_KEY
+# MacKey (v1.0.0)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Platform: macOS 10.15+](https://img.shields.io/badge/Platform-macOS%2010.15%2B-lightgrey.svg)](#)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-green.svg)](https://github.com/dinhphu-0124/OpenKey/releases)
 
-**OpenKey** là giải pháp bộ gõ tiếng Việt/Anh gọn nhẹ, mượt mà và tối ưu dành riêng cho người dùng macOS, kế thừa từ nền tảng mã nguồn mở mạnh mẽ của dự án gốc OpenKey. Phiên bản cải tiến **DinhPhuu_KEY** mang lại trải nghiệm gõ thông minh và tương thích tốt nhất trên các hệ điều hành macOS hiện đại.
+**MacKey** là giải pháp bộ gõ tiếng Việt/Anh gọn nhẹ, mượt mà và tối ưu dành riêng cho người dùng macOS, kế thừa từ nền tảng mã nguồn mở mạnh mẽ của dự án gốc OpenKey. Phiên bản cải tiến **MacKey** mang lại trải nghiệm gõ thông minh và tương thích tốt nhất trên các hệ điều hành macOS hiện đại.
 
 ---
 
@@ -20,7 +20,7 @@
 > **Giấy phép mã nguồn mở (GPLv3):** Mã nguồn của ứng dụng được mở công khai và minh bạch. Bạn hoàn toàn có thể tải mã nguồn về tự build, cải tiến theo mục đích cá nhân. Nếu bạn tái phân phối bản cải tiến, mã nguồn của nó bắt buộc phải được mở công khai và ghi rõ thông tin bản gốc từ OpenKey.
 
 > [!WARNING]
-> **Tránh xung đột bộ gõ:** Khi sử dụng OpenKey, bạn nên tắt hẳn hoặc xóa các bộ gõ tiếng Việt khác đang chạy trên hệ thống (chẳng hạn như bộ gõ mặc định của macOS hoặc EVKey) vì việc chạy song song hai chương trình bộ gõ sẽ gây xung đột phím và dẫn đến hoạt động không chính xác.
+> **Tránh xung đột bộ gõ:** Khi sử dụng MacKey, bạn nên tắt hẳn hoặc xóa các bộ gõ tiếng Việt khác đang chạy trên hệ thống (chẳng hạn như bộ gõ mặc định của macOS hoặc EVKey) vì việc chạy song song hai chương trình bộ gõ sẽ gây xung đột phím và dẫn đến hoạt động không chính xác.
 
 ---
 
@@ -87,7 +87,7 @@
 
 ---
 
-## 🛠️ Chi tiết tính năng (Bản DinhPhuu_KEY)
+## 🛠️ Chi tiết tính năng (MacKey)
 
 Hệ thống tính năng được tổ chức trực quan theo cấu trúc 4 tab chính trong Bảng điều khiển:
 
@@ -114,7 +114,8 @@ Hệ thống tính năng được tổ chức trực quan theo cấu trúc 4 tab
   * Bật/tắt toàn bộ tính năng gõ tắt chỉ với một thao tác.
   * Cho phép áp dụng gõ tắt ngay cả khi đang ở chế độ gõ Tiếng Anh.
   * **Tự động viết hoa thông minh theo phím tắt:** Gõ `Btw` → ra *By the way*, gõ `BTW` → ra *BY THE WAY*.
-* **Nhập nhanh từ macOS (Text Replacement):** Tự động đồng bộ và nạp trực tiếp danh sách từ viết tắt bạn đã lưu trên iCloud của macOS (từ *System Settings → Keyboard*) vào OpenKey chỉ bằng một cú click chuột.
+* **Nhập/xuất hàng loạt qua Excel/CSV:** Nhập nhanh danh sách gõ tắt từ tệp Excel (`.xlsx`) hoặc CSV (Cột A là Từ viết tắt, Cột B là Nội dung đầy đủ), hoặc xuất toàn bộ danh sách hiện có ra tệp Excel/CSV qua hộp thoại chọn định dạng trực quan.
+* **Thao tác nhanh bằng bàn phím:** Nhấn `Return (Enter)` để chuyển tiêu điểm giữa ô "Từ gõ tắt" và "Nội dung đầy đủ", tự động thực hiện Thêm/Cập nhật.
 
 ### 3. Tab "Hệ thống" - Thiết lập chung & Tương thích
 * **Khởi động cùng macOS:** Đảm bảo bộ gõ luôn sẵn sàng ngay khi mở máy.
@@ -137,7 +138,7 @@ Hệ thống tính năng được tổ chức trực quan theo cấu trúc 4 tab
 * Tích hợp thông báo hệ thống khi hoàn thành chuyển đổi.
 
 ### 5. Menu thanh trạng thái (Status Bar Menu)
-Bấm chuột vào biểu tượng OpenKey trên thanh menu để:
+Bấm chuột vào biểu tượng MacKey trên thanh menu để:
 * Bật/tắt nhanh Tiếng Việt.
 * Đổi nhanh kiểu gõ (Telex / VNI).
 * Đổi nhanh giữa 3 bảng mã phổ biến nhất (Unicode, TCVN3, VNI Windows).
@@ -152,38 +153,38 @@ Bấm chuột vào biểu tượng OpenKey trên thanh menu để:
 * Hỗ trợ nền tảng Universal (chạy mượt mà trên cả chip Intel và Apple Silicon M1/M2/M3/M4...).
 
 ### Bước 1: Tải file cài đặt
-1. Truy cập trang Releases chính thức: [OpenKey Releases](https://github.com/dinhphu-0124/OpenKey/releases)
-2. Tải về file `.dmg` mới nhất (ví dụ: `OpenKey-1.0.0.dmg`).
+1. Truy cập trang Releases chính thức: [MacKey Releases](https://github.com/dinhphu-0124/OpenKey/releases)
+2. Tải về file `.dmg` mới nhất (ví dụ: `MacKey-1.0.0.dmg`).
 
 ### Bước 2: Tiến hành cài đặt
 1. Mở file `.dmg` vừa tải về (double-click vào file).
-2. Kéo biểu tượng **OpenKey** ở bên trái và thả vào thư mục **Applications** (Ứng dụng) ở bên phải.
-3. Chờ vài giây để hệ thống hoàn tất sao chép. Sau đó, bạn có thể đóng cửa sổ `.dmg` và click chuột phải vào ổ đĩa ảo OpenKey trên màn hình chính chọn **Eject** (Trục xuất) rồi xóa file cài đặt `.dmg` để giải phóng bộ nhớ.
+2. Kéo biểu tượng **MacKey** ở bên trái và thả vào thư mục **Applications** (Ứng dụng) ở bên phải.
+3. Chờ vài giây để hệ thống hoàn tất sao chép. Sau đó, bạn có thể đóng cửa sổ `.dmg` và click chuột phải vào ổ đĩa ảo MacKey trên màn hình chính chọn **Eject** (Trục xuất) rồi xóa file cài đặt `.dmg` để giải phóng bộ nhớ.
 
 ### Bước 3: Mở ứng dụng lần đầu (Vượt cảnh báo Gatekeeper)
 Do ứng dụng chưa được Apple ký số công chứng (notarize), hệ thống sẽ cảnh báo ngăn chặn ở lần chạy đầu tiên:
-1. Mở Finder và truy cập thư mục **Applications**, tìm đến **OpenKey**.
-2. Click chuột phải (hoặc nhấn giữ phím `Control` + click) vào **OpenKey** → chọn **Open**.
+1. Mở Finder và truy cập thư mục **Applications**, tìm đến **MacKey**.
+2. Click chuột phải (hoặc nhấn giữ phím `Control` + click) vào **MacKey** → chọn **Open**.
 3. Một hộp thoại xuất hiện với thông báo *"macOS không thể xác minh nhà phát triển..."* → Hãy nhấn **Open** một lần nữa để xác nhận mở.
    > [!NOTE]
    > Bạn chỉ cần thực hiện thao tác click chuột phải này duy nhất một lần đầu tiên. Từ những lần sau, bạn có thể double-click mở app bình thường.
    > *Nếu trước đó bạn lỡ double-click thông thường và bị chặn hoàn toàn không có nút Open, hãy truy cập **System Settings (Cài đặt hệ thống) → Privacy & Security (Quyền riêng tư & Bảo mật)**, cuộn xuống dưới cùng và nhấn **Open Anyway (Vẫn mở)** để cấp quyền.*
 
 ### Bước 4: Cấp quyền Trợ năng (Accessibility)
-Để OpenKey có thể can thiệp và chèn các ký tự tiếng Việt vào các ứng dụng khác, quyền Trợ năng là bắt buộc:
-1. Ngay sau khi mở app, hộp thoại *"OpenKey cần bạn cấp quyền để có thể hoạt động!"* sẽ xuất hiện → Nhấn nút **Cấp quyền**.
+Để MacKey có thể can thiệp và chèn các ký tự tiếng Việt vào các ứng dụng khác, quyền Trợ năng là bắt buộc:
+1. Ngay sau khi mở app, hộp thoại *"MacKey cần bạn cấp quyền để có thể hoạt động!"* sẽ xuất hiện → Nhấn nút **Cấp quyền**.
 2. Hệ thống sẽ tự động chuyển hướng đến mục: **System Settings → Privacy & Security → Accessibility**.
-3. Hãy tìm **OpenKey** trong danh sách và gạt công tắc sang bên phải (màu xanh). Có thể hệ thống sẽ yêu cầu bạn nhập mật khẩu máy hoặc quét Touch ID để xác nhận.
-4. Đóng cửa sổ Cài đặt hệ thống, khởi động lại OpenKey để quyền được áp dụng hoàn toàn.
+3. Hãy tìm **MacKey** trong danh sách và gạt công tắc sang bên phải (màu xanh). Có thể hệ thống sẽ yêu cầu bạn nhập mật khẩu máy hoặc quét Touch ID để xác nhận.
+4. Đóng cửa sổ Cài đặt hệ thống, khởi động lại MacKey để quyền được áp dụng hoàn toàn.
 
-### Bước 5: Kích hoạt tiến trình nền OpenKeyHelper
-Tiến trình phụ trợ **OpenKeyHelper** đảm nhiệm việc tự khởi động bộ gõ cùng macOS:
-1. Mở Bảng điều khiển OpenKey → chuyển sang tab **Hệ thống**.
+### Bước 5: Kích hoạt tiến trình nền MacKeyHelper
+Tiến trình phụ trợ **MacKeyHelper** đảm nhiệm việc tự khởi động bộ gõ cùng macOS:
+1. Mở Bảng điều khiển MacKey → chuyển sang tab **Hệ thống**.
 2. Nếu tính năng "Khởi động cùng macOS" đang bật nhưng ứng dụng chưa tự khởi chạy, hãy tắt đi rồi bật lại công tắc này một lần để tái thiết lập.
-3. Để chắc chắn, bạn có thể kiểm tra tại **System Settings → General → Login Items**, đảm bảo **OpenKeyHelper** đã có tên trong danh sách cho phép chạy nền.
+3. Để chắc chắn, bạn có thể kiểm tra tại **System Settings → General → Login Items**, đảm bảo **MacKeyHelper** đã có tên trong danh sách cho phép chạy nền.
 
 ### Bước 6: Kiểm tra hoạt động
-1. Quan sát góc trên bên phải màn hình: Biểu tượng OpenKey hiển thị chữ **V** (Tiếng Việt) hoặc **E** (Tiếng Anh).
+1. Quan sát góc trên bên phải màn hình: Biểu tượng MacKey hiển thị chữ **V** (Tiếng Việt) hoặc **E** (Tiếng Anh).
 2. Nhấn vào biểu tượng hoặc sử dụng phím tắt chuyển đổi để đưa app về trạng thái chữ **V**.
 3. Mở một ứng dụng soạn thảo văn bản (như Notes, TextEdit) và gõ thử cụm từ: `Vieejt Nam` xem có hiển thị chính xác thành **Việt Nam** hay không.
 
@@ -195,9 +196,9 @@ Tiến trình phụ trợ **OpenKeyHelper** đảm nhiệm việc tự khởi đ
 | :--- | :--- | :--- |
 | **Gõ không ra dấu tiếng Việt** | Ứng dụng đang ở chế độ gõ tiếng Anh. | Kiểm tra biểu tượng trên Menu bar, chuyển trạng thái sang chữ **V** (màu đỏ). |
 | **App báo lỗi "Không thể mở vì tệp bị hỏng"** | Tệp tin cài đặt `.dmg` tải về bị lỗi, không toàn vẹn. | Xóa file cũ, tải lại tệp cài đặt mới từ trang Releases. |
-| **Đã cấp quyền Accessibility nhưng vẫn không gõ được** | Lỗi nhận diện quyền của hệ điều hành macOS. | Vào mục **Accessibility** trong cài đặt, tắt hẳn quyền của OpenKey, tắt app. Sau đó mở lại app và bật lại quyền từ đầu. |
+| **Đã cấp quyền Accessibility nhưng vẫn không gõ được** | Lỗi nhận diện quyền của hệ điều hành macOS. | Vào mục **Accessibility** trong cài đặt, tắt hẳn quyền của MacKey, tắt app. Sau đó mở lại app và bật lại quyền từ đầu. |
 | **Cập nhật lên bản mới bị mất quyền Accessibility** | Bản mới sử dụng Team ID hoặc chữ ký số khác bản cũ. | Thực hiện cấp lại quyền Trợ năng cho app mới tương tự như **Bước 4**. |
-| **Biểu tượng không xuất hiện trên thanh Menu bar** | Tiến trình nền hỗ trợ chưa được khởi chạy. | Thực hiện lại các chỉ dẫn ở **Bước 5** để kích hoạt tiến trình nền `OpenKeyHelper`. |
+| **Biểu tượng không xuất hiện trên thanh Menu bar** | Tiến trình nền hỗ trợ chưa được khởi chạy. | Thực hiện lại các chỉ dẫn ở **Bước 5** để kích hoạt tiến trình nền `MacKeyHelper`. |
 
 ---
 
@@ -205,18 +206,18 @@ Tiến trình phụ trợ **OpenKeyHelper** đảm nhiệm việc tự khởi đ
 
 Nếu bạn không muốn sử dụng ứng dụng nữa và muốn dọn dẹp sạch sẽ hệ thống:
 
-1. Click vào biểu tượng OpenKey trên thanh Menu bar → chọn **Thoát**.
-2. Truy cập thư mục **Applications**, kéo tệp **OpenKey.app** bỏ vào **Trash** (Thùng rác).
+1. Click vào biểu tượng MacKey trên thanh Menu bar → chọn **Thoát**.
+2. Truy cập thư mục **Applications**, kéo tệp **MacKey.app** bỏ vào **Trash** (Thùng rác).
 3. **Dọn sạch các file cấu hình tạm (Tùy chọn):**
    * Mở Finder, nhấn tổ hợp phím `⌘ Command + ⇧ Shift + G` và dán đường dẫn: `~/Library/Preferences/`
-   * Tìm và xóa file: `com.tuyenmai.openkey.plist`
-   * Truy cập **System Settings → General → Login Items** và xóa bỏ dòng **OpenKeyHelper** nếu còn sót lại.
+   * Tìm và xóa file: `com.dinhphu.mackey.plist`
+   * Truy cập **System Settings → General → Login Items** và xóa bỏ dòng **MacKeyHelper** nếu còn sót lại.
 
 ---
 
 ## Giấy phép — GPLv3
 
-OpenKey phát hành theo giấy phép **GPLv3**
+MacKey phát hành theo giấy phép **GPLv3**
 - Dựa trên: <https://github.com/tuyenvm/OpenKey> - tác giả gốc: Tuyền Mai và cộng đồng OpenKey (GPLv3).
 - Bản chỉnh sửa bởi: **DinhPhu** © 2026
 - Mọi góp ý, gửi cho mình qua emai: dinhphuhcmus15@gmail.com

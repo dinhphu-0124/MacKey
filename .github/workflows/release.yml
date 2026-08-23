@@ -24,8 +24,8 @@ jobs:
             echo "version=dev-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Kiểm tra chữ ký App/OpenKey.app
-        run: codesign --verify --deep --strict App/OpenKey.app
+      - name: Kiểm tra chữ ký App/MacKey.app
+        run: codesign --verify --deep --strict App/MacKey.app
 
       - name: Cài create-dmg
         run: brew install create-dmg
@@ -33,37 +33,37 @@ jobs:
       - name: Tạo DMG
         run: |
           create-dmg \
-            --volname "OpenKey" \
+            --volname "MacKey" \
             --window-size 600 400 \
             --icon-size 100 \
-            --icon "OpenKey.app" 150 200 \
+            --icon "MacKey.app" 150 200 \
             --app-drop-link 450 200 \
-            --hide-extension "OpenKey.app" \
-            "OpenKey-${{ steps.version.outputs.version }}.dmg" \
-            "App/OpenKey.app"
+            --hide-extension "MacKey.app" \
+            "MacKey-${{ steps.version.outputs.version }}.dmg" \
+            "App/MacKey.app"
 
       - name: Kiểm tra DMG vừa tạo
         run: |
-          hdiutil attach "OpenKey-${{ steps.version.outputs.version }}.dmg" -nobrowse -quiet
-          codesign --verify --deep --strict "/Volumes/OpenKey/OpenKey.app"
-          hdiutil detach /Volumes/OpenKey -quiet
+          hdiutil attach "MacKey-${{ steps.version.outputs.version }}.dmg" -nobrowse -quiet
+          codesign --verify --deep --strict "/Volumes/MacKey/MacKey.app"
+          hdiutil detach /Volumes/MacKey -quiet
 
       - name: Tạo bản ZIP dự phòng
-        run: ditto -c -k --keepParent App/OpenKey.app "OpenKey-${{ steps.version.outputs.version }}.zip"
+        run: ditto -c -k --keepParent App/MacKey.app "MacKey-${{ steps.version.outputs.version }}.zip"
 
       - name: Upload artifact (chạy thủ công / kiểm tra trước khi tag)
         if: github.ref_type != 'tag'
         uses: actions/upload-artifact@v4
         with:
-          name: OpenKey-${{ steps.version.outputs.version }}
+          name: MacKey-${{ steps.version.outputs.version }}
           path: |
-            OpenKey-${{ steps.version.outputs.version }}.dmg
-            OpenKey-${{ steps.version.outputs.version }}.zip
+            MacKey-${{ steps.version.outputs.version }}.dmg
+            MacKey-${{ steps.version.outputs.version }}.zip
 
       - name: Đưa lên GitHub Release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            OpenKey-${{ steps.version.outputs.version }}.dmg
-            OpenKey-${{ steps.version.outputs.version }}.zip
+            MacKey-${{ steps.version.outputs.version }}.dmg
+            MacKey-${{ steps.version.outputs.version }}.zip
