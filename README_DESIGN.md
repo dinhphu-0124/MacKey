@@ -2,7 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Platform: macOS 10.15+](https://img.shields.io/badge/Platform-macOS%2010.15%2B-lightgrey.svg)](#)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-green.svg)](https://github.com/dinhphu-0124/OpenKey/releases)
+[![Release](https://img.shields.io/badge/Release-v1.0.0-green.svg)](https://github.com/dinhphu-0124/MacKey/releases)
 
 **MacKey** là giải pháp bộ gõ tiếng Việt/Anh gọn nhẹ, mượt mà và tối ưu dành riêng cho người dùng macOS, kế thừa từ nền tảng mã nguồn mở mạnh mẽ của dự án gốc OpenKey. Phiên bản cải tiến **MacKey** mang lại trải nghiệm gõ thông minh và tương thích tốt nhất trên các hệ điều hành macOS hiện đại.
 
@@ -153,7 +153,7 @@ Bấm chuột vào biểu tượng MacKey trên thanh menu để:
 * Hỗ trợ nền tảng Universal (chạy mượt mà trên cả chip Intel và Apple Silicon M1/M2/M3/M4...).
 
 ### Bước 1: Tải file cài đặt
-1. Truy cập trang Releases chính thức: [MacKey Releases](https://github.com/dinhphu-0124/OpenKey/releases)
+1. Truy cập trang Releases chính thức: [MacKey Releases](https://github.com/dinhphu-0124/MacKey/releases)
 2. Tải về file `.dmg` mới nhất (ví dụ: `MacKey-1.0.0.dmg`).
 
 ### Bước 2: Tiến hành cài đặt
