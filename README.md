@@ -6,6 +6,14 @@
 
 **MacKey** là giải pháp bộ gõ tiếng Việt/Anh gọn nhẹ, mượt mà và tối ưu dành riêng cho người dùng macOS, kế thừa từ nền tảng mã nguồn mở mạnh mẽ của dự án gốc OpenKey. Phiên bản cải tiến **MacKey** mang lại trải nghiệm gõ thông minh và tương thích tốt nhất trên các hệ điều hành macOS hiện đại.
 
+<p align="center">
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.0.dmg">
+    <img src="https://img.shields.io/badge/⬇️_Tải_MacKey_ngay-.dmg_miễn_phí-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Tải MacKey ngay" />
+  </a>
+  <br/>
+  <sub>Hoặc xem tất cả bản phát hành tại <a href="https://github.com/dinhphu-0124/MacKey/releases">trang Releases</a></sub>
+</p>
+
 ---
 
 ## 🌟 Lợi ích nổi bật
