@@ -12,7 +12,6 @@ AppDelegate* appDelegate;
 extern ViewController* viewController;
 extern void OnTableCodeChange(void);
 extern void RequestNewSession(void);
-extern void RequestNewSessionOnAppSwitch(void);
 
 //see document in Engine.h
 int vLanguage = 1;
@@ -542,9 +541,7 @@ extern bool convertToolDontAlertWhenCompleted;
 }
 
 -(void)receiveActiveAppChanged: (NSNotification*)note {
-    // The user switched to a different app (e.g. opened Zalo/Messenger to
-    // type a new message) -> re-arm auto-capitalize for the first character.
-    RequestNewSessionOnAppSwitch();
+    RequestNewSession();
 }
 
 -(void)registerSupportedNotification {

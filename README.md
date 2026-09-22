@@ -1,13 +1,13 @@
-# MacKey (v1.0.0)
+# MacKey (v1.0.1)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Platform: macOS 10.15+](https://img.shields.io/badge/Platform-macOS%2010.15%2B-lightgrey.svg)](#)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-green.svg)](https://github.com/dinhphu-0124/MacKey/releases)
+[![Release](https://img.shields.io/badge/Release-v1.0.1-green.svg)](https://github.com/dinhphu-0124/MacKey/releases)
 
 **MacKey** là giải pháp bộ gõ tiếng Việt/Anh gọn nhẹ, mượt mà và tối ưu dành riêng cho người dùng macOS, kế thừa từ nền tảng mã nguồn mở mạnh mẽ của dự án gốc OpenKey. Phiên bản cải tiến **MacKey** mang lại trải nghiệm gõ thông minh và tương thích tốt nhất trên các hệ điều hành macOS hiện đại.
 
 <p align="center">
-  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.0.dmg">
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.1.dmg">
     <img src="https://img.shields.io/badge/⬇️_Tải_MacKey_ngay-.dmg_miễn_phí-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Tải MacKey ngay" />
   </a>
   <br/>
@@ -18,7 +18,7 @@
 
 ## 🌟 Lợi ích nổi bật
 
-* 🧠 **Trải nghiệm gõ phím thông minh hơn:** Tự động nhận diện và viết hoa chữ cái đầu tiên ngay khi bạn chuyển sang ứng dụng hoặc ô nhập liệu mới, giúp văn bản luôn chỉn chu mà không tốn công nhấn Shift hay sửa thủ công.
+* 🧠 **Trải nghiệm gõ phím thông minh hơn:** Tự động viết hoa chữ cái đầu tiên chuẩn xác sau các dấu kết thúc câu (. ? !), không tự ý viết hoa khi mở app hay chuyển ô nhập, giữ phím thường tự nhiên khi gõ.
 * ⚡ **Tối ưu hóa cho macOS hiện đại:** Được tinh chỉnh và sửa lỗi tương thích để chạy mượt mà, ổn định trên các phiên bản macOS mới nhất, hạn chế tối đa tình trạng giật lag, mất dấu hay xung đột bộ gõ.
 * 📦 **Sẵn sàng sử dụng, không rườm rà:** Người dùng thông thường có thể tải ngay bộ cài `.dmg` hoàn chỉnh từ mục Releases về kéo-thả để sử dụng ngay mà không cần biết lập trình hay tự build mã nguồn.
 * 🛡️ **Minh bạch và an toàn tuyệt đối:** Phát hành dưới giấy phép mã nguồn mở GPLv3, đảm bảo tính minh bạch, không chứa mã độc theo dõi thao tác phím (keylogger) và tôn trọng quyền riêng tư của bạn.
@@ -129,7 +129,7 @@ Hệ thống tính năng được tổ chức trực quan theo cấu trúc 4 tab
 * **Khởi động cùng macOS:** Đảm bảo bộ gõ luôn sẵn sàng ngay khi mở máy.
 * **Tùy chọn hiển thị:** Ẩn/hiện cửa sổ điều khiển khi khởi động hoặc ẩn biểu tượng trên thanh Dock.
 * **Giao diện tối ưu:** Biểu tượng thanh Menu bar có màu xám dịu mắt, tương thích hoàn toàn với Dark Mode.
-* **Viết hoa chữ cái đầu câu:** Tự động viết hoa chữ cái đầu tiên khi bắt đầu nhập liệu vào một ô văn bản hoặc ứng dụng mới (tính năng độc quyền của bản cải tiến này).
+* **Viết hoa chữ cái đầu câu:** Tự động viết hoa chữ cái sau các dấu kết thúc câu (. ? !), giữ chữ thường tự nhiên khi bắt đầu ô nhập mới hoặc chuyển ứng dụng.
 * **Tương thích Layout bàn phím khác:** Hỗ trợ xử lý chính xác khi người dùng sử dụng các bố cục bàn phím thay thế như **Dvorak** hay **Colemak** thay vì QWERTY chuẩn.
 * **Cập nhật & Cấu hình:**
   * Tự động kiểm tra phiên bản mới khi khởi động & nút *Kiểm tra ngay*.
@@ -162,7 +162,7 @@ Bấm chuột vào biểu tượng MacKey trên thanh menu để:
 
 ### Bước 1: Tải file cài đặt
 1. Truy cập trang Releases chính thức: [MacKey Releases](https://github.com/dinhphu-0124/MacKey/releases)
-2. Tải về file `.dmg` mới nhất (ví dụ: `MacKey-1.0.0.dmg`).
+2. Tải về file `.dmg` mới nhất (ví dụ: `MacKey-1.0.1.dmg`).
 
 ### Bước 2: Tiến hành cài đặt
 1. Mở file `.dmg` vừa tải về (double-click vào file).

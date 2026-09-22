@@ -179,21 +179,6 @@ extern int vTempOffMacKey;
  */
 void* vKeyInit();
 
-/**
- * Call this when a new typing session starts in a possibly-empty field
- * (e.g. right after the user clicks into a text field), so the next
- * character typed gets capitalized even without a preceding "." or Enter.
- */
-void requestCapitalizeNextChar();
-
-/**
- * Call this when the front app changes (the user switched to a different
- * app, e.g. to type a new message in Zalo/Messenger). Like
- * requestCapitalizeNextChar(), but the arm also survives the very next
- * mouse click or control-key combo (e.g. clicking into the message box
- * right after switching), which would otherwise cancel it immediately.
- */
-void notifyAppSwitched();
 
 /**
  * Convert engine character to real character
