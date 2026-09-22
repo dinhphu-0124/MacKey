@@ -78,6 +78,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		232EAAFD21F1B33E0085D362 /* xlsx_exporter.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = xlsx_exporter.py; sourceTree = "<group>"; };
+		232EAAFF21F1B33E0085D362 /* xlsx_parser.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = xlsx_parser.py; sourceTree = "<group>"; };
 		23136D90231FBD49000764E6 /* ConvertToolViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConvertToolViewController.h; sourceTree = "<group>"; };
 		23136D91231FBD49000764E6 /* ConvertToolViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ConvertToolViewController.mm; sourceTree = "<group>"; };
 		232DB1E021FAED280049A0B5 /* StatusHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = StatusHighlighted.png; sourceTree = "<group>"; };

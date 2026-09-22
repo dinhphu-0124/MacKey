@@ -101,13 +101,33 @@
 - (void)importFromExcelOrCSV:(NSString*)filePath {
     NSString* scriptPath = [[NSBundle mainBundle] pathForResource:@"xlsx_parser" ofType:@"py"];
     if (!scriptPath) {
+        NSString* resPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"xlsx_parser.py"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:resPath]) {
+            scriptPath = resPath;
+        }
+    }
+    if (!scriptPath) {
         [self showMessage:@"Không tìm thấy bộ phân tích tệp Excel trong ứng dụng."];
         return;
     }
     
+    NSString* pythonPath = @"/usr/bin/python3";
+    if (![[NSFileManager defaultManager] fileExistsAtPath:pythonPath]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:@"/opt/homebrew/bin/python3"]) {
+            pythonPath = @"/opt/homebrew/bin/python3";
+        } else if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/local/bin/python3"]) {
+            pythonPath = @"/usr/local/bin/python3";
+        }
+    }
+    
     NSTask* task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/python3"];
+    [task setLaunchPath:pythonPath];
     [task setArguments:@[scriptPath, filePath]];
+    
+    NSMutableDictionary* env = [[[NSProcessInfo processInfo] environment] mutableCopy];
+    env[@"LC_ALL"] = @"en_US.UTF-8";
+    env[@"PYTHONIOENCODING"] = @"utf-8";
+    [task setEnvironment:env];
     
     NSPipe* outputPipe = [NSPipe pipe];
     NSPipe* errorPipe = [NSPipe pipe];
@@ -289,6 +309,12 @@
 - (void)performExportToPath:(NSString*)filePath isExcel:(BOOL)isExcel {
     NSString* scriptPath = [[NSBundle mainBundle] pathForResource:@"xlsx_exporter" ofType:@"py"];
     if (!scriptPath) {
+        NSString* resPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"xlsx_exporter.py"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:resPath]) {
+            scriptPath = resPath;
+        }
+    }
+    if (!scriptPath) {
         [self showMessage:@"Không tìm thấy bộ xuất tệp Excel/CSV trong ứng dụng."];
         return;
     }
@@ -311,9 +337,23 @@
     }
     NSString* jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
+    NSString* pythonPath = @"/usr/bin/python3";
+    if (![[NSFileManager defaultManager] fileExistsAtPath:pythonPath]) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:@"/opt/homebrew/bin/python3"]) {
+            pythonPath = @"/opt/homebrew/bin/python3";
+        } else if ([[NSFileManager defaultManager] fileExistsAtPath:@"/usr/local/bin/python3"]) {
+            pythonPath = @"/usr/local/bin/python3";
+        }
+    }
+    
     NSTask* task = [[NSTask alloc] init];
-    [task setLaunchPath:@"/usr/bin/python3"];
+    [task setLaunchPath:pythonPath];
     [task setArguments:@[scriptPath, jsonStr, filePath]];
+    
+    NSMutableDictionary* env = [[[NSProcessInfo processInfo] environment] mutableCopy];
+    env[@"LC_ALL"] = @"en_US.UTF-8";
+    env[@"PYTHONIOENCODING"] = @"utf-8";
+    [task setEnvironment:env];
     
     NSPipe* errorPipe = [NSPipe pipe];
     [task setStandardError:errorPipe];
