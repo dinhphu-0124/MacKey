@@ -1,5 +1,6 @@
 
 #import "MacKeyManager.h"
+#import "MacroViewController.h"
 #import <pthread.h>
 
 extern void MacKeyInit(void);
@@ -161,10 +162,11 @@ void MacKeyStateUnlock(void) {
 }
 
 +(void)showMessage:(NSWindow*)window message:(NSString*)msg subMsg:(NSString*)subMsg {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:msg];
-    [alert setInformativeText:subMsg];
-    [alert addButtonWithTitle:@"OK"];
+    NSAlert *alert = [MacroViewController styledAlertWithTitle:msg
+                                                       message:subMsg
+                                                          icon:nil
+                                                         style:NSAlertStyleInformational
+                                                  buttonTitles:@[@"OK"]];
     if (window) {
         [alert beginSheetModalForWindow:window completionHandler:^(NSModalResponse returnCode) {
         }];
@@ -173,133 +175,214 @@ void MacKeyStateUnlock(void) {
     }
 }
 
-#pragma mark -AutoUpdate feature
+#pragma mark - AutoUpdate feature
 
-+(void)checkNewVersion:(NSWindow*)parent callbackFunc:(CheckNewVersionCallback) callback {
-    //load new version config
-    NSURLSession *aSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [[aSession dataTaskWithURL:[NSURL URLWithString:@"https://raw.githubusercontent.com/dinhphu-0124/MacKey/main/Source/version.json"] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        // callback phải LUÔN được gọi đúng 1 lần, kể cả khi request thất bại
-        // (mất mạng, DNS lỗi, status khác 200, JSON hỏng...). Trước đây chỉ
-        // gọi ở nhánh thành công, khiến nút "Kiểm tra bản mới" ở UI kẹt vĩnh
-        // viễn vì nó chỉ tự bật lại bên trong callback.
++ (BOOL)isRemoteVersion:(NSString *)remoteVer newerThanCurrent:(NSString *)currentVer {
+    if (!remoteVer || remoteVer.length == 0) return NO;
+    if (!currentVer || currentVer.length == 0) return YES;
+    
+    NSString *cleanCur = [currentVer stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([cleanCur hasPrefix:@"v"] || [cleanCur hasPrefix:@"V"]) {
+        cleanCur = [cleanCur substringFromIndex:1];
+    }
+    NSString *cleanRem = [remoteVer stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([cleanRem hasPrefix:@"v"] || [cleanRem hasPrefix:@"V"]) {
+        cleanRem = [cleanRem substringFromIndex:1];
+    }
+    
+    NSArray *curParts = [cleanCur componentsSeparatedByString:@"."];
+    NSArray *remParts = [cleanRem componentsSeparatedByString:@"."];
+    NSInteger maxLen = MAX(curParts.count, remParts.count);
+    for (NSInteger i = 0; i < maxLen; i++) {
+        NSInteger cVal = (i < curParts.count) ? [curParts[i] integerValue] : 0;
+        NSInteger rVal = (i < remParts.count) ? [remParts[i] integerValue] : 0;
+        if (rVal > cVal) return YES;
+        if (rVal < cVal) return NO;
+    }
+    return NO;
+}
+
++ (void)checkNewVersion:(NSWindow*)parent callbackFunc:(CheckNewVersionCallback)callback {
+    NSString *currentVer = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"] ?: @"1.0.2";
+    
+    NSURL *githubAPIUrl = [NSURL URLWithString:@"https://api.github.com/repos/dinhphu-0124/MacKey/releases/latest"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:githubAPIUrl
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                                       timeoutInterval:10.0];
+    [request setValue:@"MacKey-App" forHTTPHeaderField:@"User-Agent"];
+    [request setValue:@"application/vnd.github.v3+json" forHTTPHeaderField:@"Accept"];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         BOOL checkSucceeded = NO;
         BOOL needUpdating = NO;
-        NSString *versionName = nil;
-
-        if (((NSHTTPURLResponse *)response).statusCode == 200 && data) {
-            NSError *jsonError = nil;
-            id object = [NSJSONSerialization JSONObjectWithData:data
-                                                          options:0
-                                                            error:&jsonError];
-            if (!jsonError && [object isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *results = object;
-                NSDictionary *ver = [results valueForKey:@"latestVersion"];
-                NSString *versionCodeString = [ver valueForKey:@"versionCode"];
-                int versionCode = (int)[versionCodeString integerValue];
-                int currentVersionCode = (int)[((NSString*)[[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleVersion"]) integerValue];
-                needUpdating = versionCode > currentVersionCode;
-                versionName = [ver valueForKey:@"versionName"];
+        NSString *remoteVersion = nil;
+        NSString *htmlUrl = nil;
+        NSString *downloadUrl = nil;
+        
+        NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)response;
+        if (httpResp && httpResp.statusCode == 200 && data) {
+            NSError *jsonErr = nil;
+            NSDictionary *releaseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonErr];
+            if (!jsonErr && [releaseDict isKindOfClass:[NSDictionary class]]) {
+                remoteVersion = releaseDict[@"tag_name"] ?: releaseDict[@"name"];
+                htmlUrl = releaseDict[@"html_url"];
+                
+                NSArray *assets = releaseDict[@"assets"];
+                if ([assets isKindOfClass:[NSArray class]]) {
+                    for (NSDictionary *asset in assets) {
+                        NSString *name = asset[@"name"];
+                        if ([name hasSuffix:@".dmg"]) {
+                            downloadUrl = asset[@"browser_download_url"];
+                            break;
+                        }
+                    }
+                    if (!downloadUrl) {
+                        for (NSDictionary *asset in assets) {
+                            NSString *name = asset[@"name"];
+                            if ([name hasSuffix:@".zip"]) {
+                                downloadUrl = asset[@"browser_download_url"];
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!downloadUrl) {
+                    downloadUrl = htmlUrl ?: @"https://github.com/dinhphu-0124/MacKey/releases";
+                }
+                
+                needUpdating = [self isRemoteVersion:remoteVersion newerThanCurrent:currentVer];
                 checkSucceeded = YES;
             }
         }
-
+        
+        // If GitHub Releases API failed (status code != 200, rate limited, or connection error),
+        // fallback to raw version.json on main branch
+        if (!checkSucceeded) {
+            NSURL *fallbackUrl = [NSURL URLWithString:@"https://raw.githubusercontent.com/dinhphu-0124/MacKey/main/Source/version.json"];
+            NSURLRequest *fbReq = [NSURLRequest requestWithURL:fallbackUrl
+                                                   cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                               timeoutInterval:10.0];
+            [[session dataTaskWithRequest:fbReq completionHandler:^(NSData *fbData, NSURLResponse *fbResp, NSError *fbErr) {
+                BOOL fbSuccess = NO;
+                BOOL fbNeedUpdate = NO;
+                NSString *fbVerName = nil;
+                
+                NSHTTPURLResponse *fbHttp = (NSHTTPURLResponse *)fbResp;
+                if (fbHttp && fbHttp.statusCode == 200 && fbData) {
+                    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:fbData options:0 error:nil];
+                    if ([json isKindOfClass:[NSDictionary class]]) {
+                        NSDictionary *latest = json[@"latestVersion"];
+                        if ([latest isKindOfClass:[NSDictionary class]]) {
+                            fbVerName = latest[@"versionName"];
+                            NSString *codeStr = latest[@"versionCode"];
+                            int versionCode = (int)[codeStr integerValue];
+                            int curCode = (int)[((NSString*)[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"]) integerValue];
+                            
+                            fbNeedUpdate = [self isRemoteVersion:fbVerName newerThanCurrent:currentVer] || (versionCode > curCode);
+                            fbSuccess = YES;
+                        }
+                    }
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (callback) callback();
+                    if (!fbSuccess && callback) {
+                        [self showMessage:parent
+                                  message:@"Không thể kiểm tra bản cập nhật"
+                                   subMsg:@"Không thể kết nối đến GitHub để đối chiếu phiên bản mới. Vui lòng kiểm tra lại kết nối mạng."];
+                    } else if (fbNeedUpdate || callback != nil) {
+                        [self showUpdateMessage:parent
+                                   needUpdating:fbNeedUpdate
+                                     currentVer:currentVer
+                                      remoteVer:fbVerName ?: currentVer
+                                    downloadUrl:@"https://github.com/dinhphu-0124/MacKey/releases"
+                                     releaseUrl:@"https://github.com/dinhphu-0124/MacKey/releases"];
+                    }
+                });
+            }] resume];
+            return;
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (callback != nil) {
-                callback();
-            }
-            if (!checkSucceeded && callback != nil) {
-                // Chỉ báo lỗi khi người dùng chủ động bấm "Kiểm tra bản mới"
-                // (callback != nil); lúc tự kiểm tra ngầm khi khởi động thì im
-                // lặng như trước, tránh phiền người dùng mỗi lần mất mạng.
-                [self showMessage:parent
-                           message:@"Không thể kiểm tra bản cập nhật"
-                            subMsg:@"Vui lòng kiểm tra kết nối mạng và thử lại."];
-            } else if (needUpdating || callback != nil) {
-                [self showUpdateMessage:parent needUpdating:needUpdating newVersion:versionName];
+            if (callback) callback();
+            if (needUpdating || callback != nil) {
+                [self showUpdateMessage:parent
+                           needUpdating:needUpdating
+                             currentVer:currentVer
+                              remoteVer:remoteVersion ?: currentVer
+                            downloadUrl:downloadUrl
+                             releaseUrl:htmlUrl ?: @"https://github.com/dinhphu-0124/MacKey/releases"];
             }
         });
     }] resume];
 }
 
-+(void)showUpdateMessage:(NSWindow*)parent needUpdating:(BOOL)needUpdating newVersion:(NSString*)versionString {
-    NSAlert *alert = [[NSAlert alloc] init];
-    [alert setMessageText:(needUpdating ? [NSString stringWithFormat:@"MacKey Có phiên bản mới (%@), bạn có muốn cập nhật không?", versionString] : @"Bạn đang dùng phiên bản mới nhất!")];
-    [alert setInformativeText:(needUpdating ? @"Bấm 'Có' để cập nhật MacKey." : @"")];
-    
-    if (!needUpdating) {
-        [alert addButtonWithTitle:@"OK"];
-    } else {
-        [alert addButtonWithTitle:@"Có"];
-        [alert addButtonWithTitle:@"Không"];
++ (void)showUpdateMessage:(NSWindow*)parent
+             needUpdating:(BOOL)needUpdating
+               currentVer:(NSString*)currentVer
+                remoteVer:(NSString*)remoteVer
+              downloadUrl:(NSString*)downloadUrl
+               releaseUrl:(NSString*)releaseUrl
+{
+    NSImage *icon = nil;
+    if (@available(macOS 11.0, *)) {
+        NSImageSymbolConfiguration *cfg = [NSImageSymbolConfiguration configurationWithPointSize:44 weight:NSFontWeightRegular];
+        NSImage *sym = needUpdating ? [NSImage imageWithSystemSymbolName:@"arrow.down.circle" accessibilityDescription:nil]
+                                    : [NSImage imageWithSystemSymbolName:@"checkmark.circle" accessibilityDescription:nil];
+        if (sym) {
+            icon = [sym imageWithSymbolConfiguration:cfg];
+        }
     }
+    
+    NSString *cleanRemoteVer = remoteVer;
+    if ([cleanRemoteVer hasPrefix:@"v"] || [cleanRemoteVer hasPrefix:@"V"]) {
+        cleanRemoteVer = [cleanRemoteVer substringFromIndex:1];
+    }
+    
+    NSString *title = nil;
+    NSString *sub = nil;
+    NSArray *btns = nil;
+    
+    if (needUpdating) {
+        title = [NSString stringWithFormat:@"Đã có bản cập nhật mới (%@)", remoteVer];
+        sub = [NSString stringWithFormat:@"Phiên bản hiện tại: %@\nPhiên bản mới nhất trên GitHub: %@\n\nBạn có muốn cập nhật phiên bản mới từ GitHub không?", currentVer, cleanRemoteVer];
+        btns = @[@"Cập nhật ngay", @"Xem trên GitHub", @"Để sau"];
+    } else {
+        title = @"Bạn đang dùng bản mới nhất";
+        sub = [NSString stringWithFormat:@"Phiên bản hiện tại (%@) đã là phiên bản mới nhất trên GitHub.", currentVer];
+        btns = @[@"OK"];
+    }
+    
+    NSAlert *alert = [MacroViewController styledAlertWithTitle:title
+                                                       message:sub
+                                                          icon:icon
+                                                         style:NSAlertStyleInformational
+                                                  buttonTitles:btns];
+    
+    void (^handleResponse)(NSModalResponse) = ^(NSModalResponse res) {
+        if (!needUpdating) return;
+        
+        if (res == NSAlertFirstButtonReturn) {
+            // "Cập nhật ngay": Open direct download URL (.dmg / .zip / release)
+            NSString *target = downloadUrl ?: (releaseUrl ?: @"https://github.com/dinhphu-0124/MacKey/releases");
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:target]];
+        } else if (res == NSAlertSecondButtonReturn) {
+            // "Xem trên GitHub": Open GitHub Releases page
+            NSString *target = releaseUrl ?: @"https://github.com/dinhphu-0124/MacKey/releases";
+            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:target]];
+        }
+    };
+    
     if (parent == nil) {
         [alert.window makeKeyAndOrderFront:nil];
         [alert.window setLevel:NSStatusWindowLevel];
         NSModalResponse res = [alert runModal];
-        if (res == 1000 && needUpdating) {
-            [self launchUpdateHelper];
-        }
+        handleResponse(res);
     } else {
         [alert beginSheetModalForWindow:parent completionHandler:^(NSModalResponse returnCode) {
-            if (returnCode == 1000 && needUpdating) {
-                [self launchUpdateHelper];
-            }
+            handleResponse(returnCode);
         }];
     }
-}
-
-+(void)launchUpdateHelper {
-    //check update app has exist or not
-    NSError *copyError = nil;
-    NSString* target = [NSString stringWithFormat:@"%@/MacKeyUpdate.app", [self getApplicationSupportFolder]];
-    [[NSFileManager defaultManager] removeItemAtPath:target error:&copyError];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:target]) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:[self getApplicationSupportFolder] withIntermediateDirectories:YES attributes:nil error:nil];
-
-        if (![[NSFileManager defaultManager] copyItemAtPath:[self getUpdateBundlePath] toPath:target error:&copyError]) {
-            NSLog(@"Error on copy");
-        }
-    }
-
-    // Bản build này không đóng gói MacKeyUpdate.app (xem README), nên không
-    // được phép thoát ứng dụng nếu helper cập nhật không thực sự tồn tại —
-    // trước đây làm vậy khiến MacKey tự tắt mà không cập nhật được gì.
-    if (![[NSFileManager defaultManager] fileExistsAtPath:target]) {
-        [self showMessage:nil
-                   message:@"Không thể tự cập nhật"
-                    subMsg:@"Bản này chưa hỗ trợ tự cập nhật. Vui lòng tải bản mới thủ công."];
-        return;
-    }
-
-    NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
-    NSURL *url = [NSURL fileURLWithPath:[workspace fullPathForApplication:target]];
-    NSWorkspaceOpenConfiguration *configuration = [NSWorkspaceOpenConfiguration configuration];
-    configuration.arguments = @[@"yeah"];
-
-    [workspace openApplicationAtURL:url
-                       configuration:configuration
-                   completionHandler:^(NSRunningApplication * _Nullable app, NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (app && !error) {
-                [NSApp terminate:0]; //exit main app so the update helper can replace it
-            } else {
-                [self showMessage:nil
-                           message:@"Không thể tự cập nhật"
-                            subMsg:@"Vui lòng tải bản mới thủ công."];
-            }
-        });
-    }];
-}
-
-+(NSString*)getApplicationSupportFolder {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    NSString *applicationSupportDirectory = [paths firstObject];
-    return [NSString stringWithFormat:@"%@/MacKey", applicationSupportDirectory];
-}
-
-+(NSString*)getUpdateBundlePath {
-    NSString *currentpath = [[NSBundle mainBundle] bundlePath];
-    return [NSString stringWithFormat:@"%@/Contents/Library/LoginItems/MacKeyUpdate.app", currentpath];
 }
 @end

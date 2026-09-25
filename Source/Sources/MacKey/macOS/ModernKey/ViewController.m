@@ -3,6 +3,7 @@
 #import "AppDelegate.h"
 #import "MyTextField.h"
 #import "MacKeyManager.h"
+#import "MacroViewController.h"
 
 extern AppDelegate *appDelegate;
 extern void OnSpellCheckingChanged(void);
@@ -543,7 +544,8 @@ extern int vPerformLayoutCompat;
                                                        : NSControlStateValueOff;
   CustomBeepSound.state = (vSwitchKeyStatus & 0x8000) ? NSControlStateValueOn
                                                       : NSControlStateValueOff;
-  [CustomSwitchKey setTextByChar:((vSwitchKeyStatus >> 24) & 0xFF)];
+  [CustomSwitchKey setTextByKeyCode:(vSwitchKeyStatus & 0xFF)
+                          character:((vSwitchKeyStatus >> 24) & 0xFF)];
 }
 
 - (IBAction)onOK:(id)sender {
@@ -551,24 +553,64 @@ extern int vPerformLayoutCompat;
 }
 
 - (IBAction)onDefaultConfig:(id)sender {
-  NSAlert *alert = [[NSAlert alloc] init];
-  [alert
-      setMessageText:@"Bạn có chắc chắn muốn thiết lập lại cấu hình mặc định?"];
-  [alert addButtonWithTitle:@"Có"];
-  [alert addButtonWithTitle:@"Không"];
+  NSUInteger macroCount = [MacroViewController currentMacroCount];
+  NSString *macroWarning = @"";
+  if (macroCount > 0) {
+    macroWarning = [NSString stringWithFormat:@" và XOÁ SẠCH TOÀN BỘ %lu từ gõ tắt hiện có", (unsigned long)macroCount];
+  } else {
+    macroWarning = @" và xoá sạch toàn bộ dữ liệu gõ tắt";
+  }
+
+  NSString *msg = [NSString stringWithFormat:@"Thao tác này sẽ đưa tất cả thiết lập về trạng thái mặc định ban đầu%@.\n\nThao tác này không thể hoàn tác. Bạn có chắc chắn muốn tiếp tục?", macroWarning];
+
+  NSAlert *alert = [MacroViewController styledAlertWithTitle:@"Khôi phục cài đặt gốc?"
+                                                     message:msg
+                                                        icon:[MacroViewController warningSquircleIcon]
+                                                       style:NSAlertStyleInformational
+                                                buttonTitles:@[@"Khôi phục & Xoá", @"Huỷ"]];
   [alert beginSheetModalForWindow:self.view.window
                 completionHandler:^(NSModalResponse returnCode) {
-                  if (returnCode == 1000) {
+                  if (returnCode == NSAlertFirstButtonReturn) {
+                    // 1. Khôi phục toàn bộ thiết lập bộ gõ mặc định
                     [appDelegate loadDefaultConfig];
-                    [[NSUserDefaults standardUserDefaults]
-                        setInteger:0
-                            forKey:@"ShowUIOnStartup"];
+
+                    // 2. Xóa sạch dữ liệu gõ tắt
+                    [MacroViewController resetAllMacroData];
+
+                    // 3. Đưa các công tắc hệ thống về mặc định
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"ShowUIOnStartup"];
                     self.ShowUIButton.state = NSControlStateValueOff;
 
-                    [[NSUserDefaults standardUserDefaults]
-                        setInteger:1
-                            forKey:@"RunOnStartup"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"RunOnStartup"];
                     self.RunOnStartupButton.state = NSControlStateValueOn;
+
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"DontCheckUpdate"];
+                    self.CheckNewVersionOnStartup.state = NSControlStateValueOn;
+
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"vPerformLayoutCompat"];
+                    self.PerformLayoutCompat.state = NSControlStateValueOff;
+
+                    // 4. Reset công cụ chuyển mã
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolToAllCaps"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolToAllNonCaps"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolToCapsFirstLetter"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolToCapsEachWord"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolRemoveMark"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolFromCode"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolToCode"];
+                    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"convertToolHotKey"];
+                    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"convertToolDontAlertWhenCompleted"];
+
+                    // 5. Cập nhật lại toàn bộ giao diện bảng điều khiển
+                    [self fillData];
+
+                    // 6. Hiển thị thông báo xác nhận thành công
+                    NSAlert *successAlert = [MacroViewController styledAlertWithTitle:@"Khôi phục thành công"
+                                                                              message:@"Đã đưa tất cả cài đặt về mặc định ban đầu và xoá toàn bộ dữ liệu gõ tắt."
+                                                                                 icon:[MacroViewController successIcon]
+                                                                                style:NSAlertStyleInformational
+                                                                         buttonTitles:@[@"OK"]];
+                    [successAlert beginSheetModalForWindow:self.view.window completionHandler:nil];
                   }
                 }];
 }

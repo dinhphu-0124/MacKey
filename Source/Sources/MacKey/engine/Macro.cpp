@@ -204,6 +204,17 @@ bool hasMacro(const string& macroName) {
     return (macroMap.find(key) != macroMap.end());
 }
 
+bool getMacroContent(const string& macroName, string& outContent) {
+    vector<Uint32> key;
+    convert(macroName, key);
+    map<vector<Uint32>, MacroData>::iterator it = macroMap.find(key);
+    if (it != macroMap.end()) {
+        outContent = it->second.macroContent;
+        return true;
+    }
+    return false;
+}
+
 void getAllMacro(vector<vector<Uint32>>& keys, vector<string>& macroTexts, vector<string>& macroContents) {
     keys.clear();
     macroTexts.clear();
@@ -239,6 +250,14 @@ bool deleteMacro(const string& macroText) {
         return true;
     }
     return false;
+}
+
+void clearAllMacros() {
+    macroMap.clear();
+}
+
+size_t getMacroCount() {
+    return macroMap.size();
 }
 
 void onTableCodeChange() {

@@ -225,7 +225,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m7F-5x-ESn">
                                 <rect key="frame" x="160" y="143" width="68" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Trang chủ:" id="eZE-Iu-ykp">
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="GitHub:" id="eZE-Iu-ykp">
                                     <font key="font" metaFont="systemThin" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -246,7 +246,7 @@
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Icon" id="qxo-YX-7X4"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jet-Gl-mzT">
-                                <rect key="frame" x="263" y="143" width="280" height="17"/>
+                                <rect key="frame" x="263" y="143" width="305" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <gestureRecognizers>
                                     <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="bsm-Pg-VQL">
@@ -271,7 +271,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C49-2T-6ca">
-                                <rect key="frame" x="263" y="118" width="283" height="17"/>
+                                <rect key="frame" x="263" y="118" width="305" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <gestureRecognizers>
                                     <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="VUh-Rw-bCl">
@@ -281,31 +281,6 @@
                                     </clickGestureRecognizer>
                                 </gestureRecognizers>
                                 <textFieldCell key="cell" lineBreakMode="clipping" continuous="YES" sendsActionOnEndEditing="YES" title="https://github.com/dinhphu-0124/MacKey/releases" id="zCu-0X-Rqo">
-                                    <font key="font" metaFont="systemThin" size="13"/>
-                                    <color key="textColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uOE-QV-t9P">
-                                <rect key="frame" x="161" y="93" width="60" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Fanpage:" id="TtI-Mk-9cF">
-                                    <font key="font" metaFont="systemThin" size="13"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QoG-g6-y7i">
-                                <rect key="frame" x="263" y="93" width="280" height="17"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <gestureRecognizers>
-                                    <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="GiO-w4-Qrl">
-                                        <connections>
-                                            <action selector="onFanPage:" target="SDG-I4-o9t" id="X0C-gc-JpK"/>
-                                        </connections>
-                                    </clickGestureRecognizer>
-                                </gestureRecognizers>
-                                <textFieldCell key="cell" lineBreakMode="clipping" continuous="YES" sendsActionOnEndEditing="YES" title="https://github.com/dinhphu-0124/MacKey" id="a54-tw-Amh">
                                     <font key="font" metaFont="systemThin" size="13"/>
                                     <color key="textColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -321,7 +296,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="USx-Nt-l0Y">
-                                <rect key="frame" x="160" y="7" width="250" height="16"/>
+                                <rect key="frame" x="160" y="10" width="250" height="16"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="MacKey (DinhPhu) © 2026" id="630-DT-XcR">
                                     <font key="font" metaFont="systemThin" size="12"/>
@@ -330,7 +305,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tvC-7v-OW8">
-                                <rect key="frame" x="156" y="30" width="141" height="32"/>
+                                <rect key="frame" x="156" y="36" width="141" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="push" title="Kiểm tra bản mới..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Nhb-MP-s0Y">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -341,7 +316,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qgw-K2-HcQ">
-                                <rect key="frame" x="160" y="67" width="236" height="18"/>
+                                <rect key="frame" x="160" y="76" width="236" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="check" title="Kiểm tra bản mới khi khởi động" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="7Pv-o7-ffq">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -718,10 +693,10 @@ DQ
                                                             <action selector="onShiftSwitchKey:" target="XfG-lQ-9wD" id="c8Y-4u-2K1"/>
                                                         </connections>
                                                     </button>
-                                                    <textField verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2s-m3-A6w" customClass="MyTextField">
-                                                        <rect key="frame" x="178" y="41" width="48" height="22"/>
+                                                    <textField toolTip="Click để đổi phím tắt tuỳ chọn (gõ phím a-z, 0-9, Space hoặc bấm Delete để chỉ dùng phím bổ trợ)" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F2s-m3-A6w" customClass="MyTextField">
+                                                        <rect key="frame" x="178" y="41" width="54" height="22"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="z" drawsBackground="YES" usesSingleLineMode="YES" id="g5L-8u-9C6">
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" placeholderString="Phím" title="z" drawsBackground="YES" usesSingleLineMode="YES" id="g5L-8u-9C6">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -741,7 +716,7 @@ DQ
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="crd1b-sub">
                                                         <rect key="frame" x="14" y="14" width="400" height="16"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Nhấn tổ hợp phím trên để chuyển nhanh Việt / Anh" id="crd1b-subc">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Tùy chọn tổ hợp phím để chuyển nhanh Việt / Anh (vd: ⌥+Z, ⌃+⇧, ⌥+Space...)" id="crd1b-subc">
                                                             <font key="font" metaFont="smallSystem"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1260,7 +1235,7 @@ DQ
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bXh-ai-gk3">
                                                         <rect key="frame" x="106" y="372" width="310" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Phiên bản 1.0.1" id="Wf7-Xb-12u">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Phiên bản 1.0.2" id="Wf7-Xb-12u">
                                                             <font key="font" metaFont="cellTitle"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1441,7 +1416,7 @@ DQ
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e48-Ve-MTZ">
                                 <rect key="frame" x="160" y="408" width="240" height="25"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="U63-Oh-ZV3">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -1488,7 +1463,7 @@ DQ
                                     <rect key="frame" x="1" y="1" width="558" height="324"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="LJ6-nV-dwY">
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="LJ6-nV-dwY">
                                             <rect key="frame" x="0.0" y="0.0" width="558" height="324"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
@@ -1573,7 +1548,7 @@ DQ
                                 </scroller>
                             </scrollView>
                             <button toolTip="Nhập danh sách gõ tắt từ file Excel (.xlsx) hoặc CSV" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="imp-mac-btn">
-                                <rect key="frame" x="20" y="10" width="140" height="32"/>
+                                <rect key="frame" x="20" y="10" width="120" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Nhập từ Excel..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="imp-mac-cell">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1584,7 +1559,7 @@ DQ
                                 </connections>
                             </button>
                             <button toolTip="Xuất danh sách gõ tắt ra file Excel (.xlsx) hoặc CSV" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="exp-mac-btn">
-                                <rect key="frame" x="170" y="10" width="100" height="32"/>
+                                <rect key="frame" x="148" y="10" width="96" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="push" title="Xuất File..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="exp-mac-cell">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -1595,7 +1570,7 @@ DQ
                                 </connections>
                             </button>
                             <button toolTip="VD: bạn định nghĩa &quot;ko=không&quot;Nếu bạn gõ: &quot;ko&quot; sẽ thành &quot;không&quot;Nếu bạn gõ &quot;Ko&quot; sẽ thành &quot;Không&quot;Nếu bạn gõ &quot;KO&quot; sẽ thành &quot;KHÔNG&quot;" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXc-GH-oYK">
-                                <rect key="frame" x="285" y="17" width="220" height="18"/>
+                                <rect key="frame" x="252" y="17" width="220" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="check" title="Tự động viết hoa theo phím tắt" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JdD-dm-U8K">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

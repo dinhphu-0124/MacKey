@@ -60,7 +60,8 @@ extern AppDelegate* appDelegate;
     self.SOption.state = (convertToolHotKey & 0x200) ? NSControlStateValueOn : NSControlStateValueOff;
     self.SCommand.state = (convertToolHotKey & 0x400) ? NSControlStateValueOn : NSControlStateValueOff;
     self.SShift.state = (convertToolHotKey & 0x800) ? NSControlStateValueOn : NSControlStateValueOff;
-    [self.SHotKey setTextByChar:((convertToolHotKey>>24) & 0xFF)];
+    [self.SHotKey setTextByKeyCode:(convertToolHotKey & 0xFF)
+                          character:((convertToolHotKey >> 24) & 0xFF)];
 }
 
 -(void)turnOffAllOption {

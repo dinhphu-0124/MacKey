@@ -10,7 +10,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak) IBOutlet NSButton *buttonAdd;
 @property (weak) IBOutlet NSButton *buttonDelete;
+@property (strong, nonatomic) NSButton *buttonAddNew;
 @property (weak) IBOutlet NSButton *AutoCapsMacro;
+
+- (IBAction)onAddNewMacro:(id)sender;
+- (IBAction)onDeleteAllMacros:(id)sender;
+
++ (NSUInteger)currentMacroCount;
++ (void)resetAllMacroData;
++ (NSImage *)trashIcon;
++ (NSImage *)warningSquircleIcon;
++ (NSImage *)successIcon;
+
++ (NSAlert *)styledAlertWithTitle:(nullable NSString *)title
+                          message:(nullable NSString *)msg
+                             icon:(nullable NSImage *)icon
+                            style:(NSAlertStyle)style
+                     buttonTitles:(NSArray<NSString *> *)buttonTitles;
 
 @end
 

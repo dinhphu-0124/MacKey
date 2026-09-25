@@ -465,8 +465,9 @@ extern bool convertToolDontAlertWhenCompleted;
 }
 
 -(void)onConvertTool {
-    if (_convertWC == nil) {
+    if (_convertWC == nil || _convertWC.window == nil) {
         _convertWC = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"ConvertWindow"];
+        _convertWC.window.releasedWhenClosed = NO;
     }
     //[MacKeyManager showDockIcon:YES];
     if ([_convertWC.window isVisible])
@@ -486,8 +487,9 @@ extern bool convertToolDontAlertWhenCompleted;
 }
 
 -(void) onControlPanelSelected {
-    if (_mainWC == nil) {
+    if (_mainWC == nil || _mainWC.window == nil) {
         _mainWC = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MacKey"];
+        _mainWC.window.releasedWhenClosed = NO;
     }
     //[MacKeyManager showDockIcon:YES];
     if ([_mainWC.window isVisible]) {
@@ -498,8 +500,9 @@ extern bool convertToolDontAlertWhenCompleted;
 }
 
 -(void) onMacroSelected {
-    if (_macroWC == nil) {
+    if (_macroWC == nil || _macroWC.window == nil) {
         _macroWC = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"MacroWindow"];
+        _macroWC.window.releasedWhenClosed = NO;
     }
     //[MacKeyManager showDockIcon:YES];
     if ([_macroWC.window isVisible])
@@ -510,8 +513,9 @@ extern bool convertToolDontAlertWhenCompleted;
 }
 
 -(void) onAboutSelected {
-    if (_aboutWC == nil) {
+    if (_aboutWC == nil || _aboutWC.window == nil) {
         _aboutWC = [[NSStoryboard storyboardWithName:@"Main" bundle:nil] instantiateControllerWithIdentifier:@"AboutWindow"];
+        _aboutWC.window.releasedWhenClosed = NO;
     }
     //[MacKeyManager showDockIcon:YES];
     if ([_aboutWC.window isVisible])

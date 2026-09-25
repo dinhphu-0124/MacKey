@@ -3,6 +3,7 @@ import zipfile
 import xml.etree.ElementTree as ET
 import json
 import csv
+import unicodedata
 
 def parse_csv(file_path):
     result = []
@@ -25,7 +26,8 @@ def parse_csv(file_path):
                 reader = csv.reader(f, delimiter=delimiter)
                 for row in reader:
                     if len(row) >= 2:
-                        a, b = str(row[0]).strip(), str(row[1]).strip()
+                        a = unicodedata.normalize('NFC', str(row[0]).strip())
+                        b = unicodedata.normalize('NFC', str(row[1]).strip())
                         if a and b:
                             result.append([a, b])
             if result:
@@ -48,7 +50,8 @@ def parse_xlsx(file_path):
                         ns = {'ns': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
                         for si in root.findall('.//ns:si', ns):
                             text_parts = [t.text for t in si.findall('.//ns:t', ns) if t.text]
-                            shared_strings.append(''.join(text_parts))
+                            raw_s = ''.join(text_parts)
+                            shared_strings.append(unicodedata.normalize('NFC', raw_s))
                 except Exception as e:
                     sys.stderr.write(f"Error reading sharedStrings: {e}\n")
 
@@ -105,11 +108,11 @@ def parse_xlsx(file_path):
                                 if t_elem is not None and t_elem.text:
                                     val = t_elem.text
 
-                        row_data[col] = val
+                        row_data[col] = unicodedata.normalize('NFC', str(val))
 
                     if 'A' in row_data and 'B' in row_data:
-                        a = str(row_data['A']).strip()
-                        b = str(row_data['B']).strip()
+                        a = unicodedata.normalize('NFC', str(row_data['A']).strip())
+                        b = unicodedata.normalize('NFC', str(row_data['B']).strip())
                         if a and b:
                             rows[r_idx] = (a, b)
 

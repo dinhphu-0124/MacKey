@@ -1,7 +1,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol MyTextFieldDelegate
+@protocol MyTextFieldDelegate <NSObject>
 @optional
 -(void)onMyTextFieldKeyChange:(unsigned short)keyCode character:(unsigned short)character;
 @end
@@ -12,4 +12,5 @@
 @property unsigned short LastKeyChar;
 
 -(void)setTextByChar:(unsigned short)chr;
+-(void)setTextByKeyCode:(unsigned short)keyCode character:(unsigned short)chr;
 @end

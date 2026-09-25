@@ -25,6 +25,10 @@
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"https://github.com/dinhphu-0124/MacKey"]];
 }
 
+- (IBAction)onGitHub:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"https://github.com/dinhphu-0124/MacKey"]];
+}
+
 - (IBAction)onFanPage:(id)sender {
     [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString:@"https://github.com/dinhphu-0124/MacKey"]];
 }

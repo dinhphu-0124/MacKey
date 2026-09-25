@@ -36,6 +36,11 @@ bool findMacro(vector<Uint32>& key, vector<Uint32>& macroContentCode);
 bool hasMacro(const string& macroName);
 
 /**
+ * get macro content for a given macro name
+ */
+bool getMacroContent(const string& macroName, string& outContent);
+
+/**
  * Get all macro to show on macro table
  */
 void getAllMacro(vector<vector<Uint32>>& keys, vector<string>& macroTexts, vector<string>& macroContents);
@@ -49,6 +54,16 @@ bool addMacro(const string& macroText, const string& macroContent);
  * delete macro from memory
  */
 bool deleteMacro(const string& macroText);
+
+/**
+ * delete all macros from memory
+ */
+void clearAllMacros();
+
+/**
+ * get total count of macros in memory
+ */
+size_t getMacroCount();
 
 /**
  * When table code changed, we have to call this function to reload all macroContentCode

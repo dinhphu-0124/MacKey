@@ -1,231 +1,328 @@
-# MacKey (v1.0.1)
-
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Platform: macOS 10.15+](https://img.shields.io/badge/Platform-macOS%2010.15%2B-lightgrey.svg)](#)
-[![Release](https://img.shields.io/badge/Release-v1.0.1-green.svg)](https://github.com/dinhphu-0124/MacKey/releases)
-
-**MacKey** là giải pháp bộ gõ tiếng Việt/Anh gọn nhẹ, mượt mà và tối ưu dành riêng cho người dùng macOS, kế thừa từ nền tảng mã nguồn mở mạnh mẽ của dự án gốc OpenKey. Phiên bản cải tiến **MacKey** mang lại trải nghiệm gõ thông minh và tương thích tốt nhất trên các hệ điều hành macOS hiện đại.
+# MacKey (v1.0.2) — Bộ gõ Tiếng Việt Hiện Đại cho macOS
 
 <p align="center">
-  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.1.dmg">
-    <img src="https://img.shields.io/badge/⬇️_Tải_MacKey_ngay-.dmg_miễn_phí-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Tải MacKey ngay" />
+  <img src="assets/tab_thongtin.png" width="620" alt="MacKey Banner" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.2-2ea44f.svg?style=for-the-badge&logo=github" alt="Release" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/macOS-10.15%2B%20%7C%20Apple%20Silicon%20%26%20Intel-000000.svg?style=for-the-badge&logo=apple" alt="macOS Support" /></a>
+  <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-007ec6.svg?style=for-the-badge" alt="License: GPL v3" /></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.2.dmg">
+    <img src="https://img.shields.io/badge/⬇️_Tải_bản_cài_đặt_MacKey_ngay-.dmg_(Miễn_phí)-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Tải MacKey ngay" />
   </a>
   <br/>
-  <sub>Hoặc xem tất cả bản phát hành tại <a href="https://github.com/dinhphu-0124/MacKey/releases">trang Releases</a></sub>
+  <sub>Tương thích hoàn hảo với chip <b>Apple Silicon (M1/M2/M3/M4)</b> và <b>Intel</b> từ macOS 10.15 Catalina đến <b>macOS 15+ Sequoia</b></sub>
 </p>
 
 ---
 
-## 🌟 Lợi ích nổi bật
+## 📖 Mục lục
 
-* 🧠 **Trải nghiệm gõ phím thông minh hơn:** Tự động viết hoa chữ cái đầu tiên chuẩn xác sau các dấu kết thúc câu (. ? !), không tự ý viết hoa khi mở app hay chuyển ô nhập, giữ phím thường tự nhiên khi gõ.
-* ⚡ **Tối ưu hóa cho macOS hiện đại:** Được tinh chỉnh và sửa lỗi tương thích để chạy mượt mà, ổn định trên các phiên bản macOS mới nhất, hạn chế tối đa tình trạng giật lag, mất dấu hay xung đột bộ gõ.
-* 📦 **Sẵn sàng sử dụng, không rườm rà:** Người dùng thông thường có thể tải ngay bộ cài `.dmg` hoàn chỉnh từ mục Releases về kéo-thả để sử dụng ngay mà không cần biết lập trình hay tự build mã nguồn.
-* 🛡️ **Minh bạch và an toàn tuyệt đối:** Phát hành dưới giấy phép mã nguồn mở GPLv3, đảm bảo tính minh bạch, không chứa mã độc theo dõi thao tác phím (keylogger) và tôn trọng quyền riêng tư của bạn.
-* 🔄 **Tự động hóa phát hành:** Tích hợp quy trình CI/CD qua GitHub Actions, giúp mọi bản cập nhật vá lỗi đều được đóng gói nhanh chóng và chính xác đến tay người dùng.
+1. [🌟 Tính năng nổi bật](#-tính-năng-nổi-bật)
+2. [📸 Tổng quan giao diện & Chức năng](#-tổng-quan-giao-diện--chức-năng)
+   - [Menu thanh trạng thái (Menu Bar)](#1-menu-thanh-trạng-thái-menu-bar)
+   - [Bảng điều khiển chính (Dashboard)](#2-bảng-điều-khiển-chính-dashboard)
+   - [Quản lý gõ tắt chuyên nghiệp (Macro)](#3-quản-lý-gõ-tắt-chuyên-nghiệp-macro)
+   - [Công cụ chuyển mã văn bản (Convert Tool)](#4-công-cụ-chuyển-mã-văn-bản-convert-tool)
+   - [Kiểm tra cập nhật tự động từ GitHub](#5-kiểm-tra-cập-nhật-tự-động-từ-github)
+3. [📥 Hướng dẫn cài đặt & Cấp quyền chi tiết (Có hình ảnh)](#-hướng-dẫn-cài-đặt--cấp-quyền-chi-tiết)
+   - [Bước 1: Tải về và cài đặt từ file DMG](#bước-1-tải-về-và-cài-đặt-từ-file-dmg)
+   - [Bước 2: Mở ứng dụng lần đầu (Vượt Gatekeeper)](#bước-2-mở-ứng-dụng-lần-đầu-vượt-gatekeeper)
+   - [Bước 3: Cấp quyền Trợ năng (Accessibility)](#bước-3-cấp-quyền-trợ-năng-accessibility---bắt-buộc)
+   - [Bước 4: Bắt đầu gõ tiếng Việt](#bước-4-bắt-đầu-gõ-tiếng-việt)
+4. [⌨️ Các kiểu gõ & Bảng mã hỗ trợ](#️-các-kiểu-gõ--bảng-mã-hỗ-trợ)
+5. [🔍 Xử lý sự cố thường gặp (FAQ)](#-xử-lý-sự-cố-thường-gặp)
+6. [🗑️ Hướng dẫn gỡ cài đặt sạch sẽ](#️-hướng-dẫn-gỡ-cài-đặt-sạch-sẽ)
+7. [📜 Giấy phép & Tác giả](#-giấy-phép--tác-giả)
 
-> [!IMPORTANT]
-> **Giấy phép mã nguồn mở (GPLv3):** Mã nguồn của ứng dụng được mở công khai và minh bạch. Bạn hoàn toàn có thể tải mã nguồn về tự build, cải tiến theo mục đích cá nhân. Nếu bạn tái phân phối bản cải tiến, mã nguồn của nó bắt buộc phải được mở công khai và ghi rõ thông tin bản gốc từ OpenKey.
+---
+
+## 🌟 Tính năng nổi bật
+
+* 🧠 **Viết hoa thông minh:** Tự động viết hoa chữ cái đầu tiên sau các dấu kết thúc câu (`.`, `?`, `!`), không tự ý viết hoa khi mở app hay chuyển ô nhập, giữ phím thường tự nhiên khi gõ.
+* ⚡ **Giao diện hiện đại chuẩn macOS:** Thiết kế phân cụm theo dạng thẻ card bo tròn sắc nét, hỗ trợ tự động Dark Mode và Light Mode, chuẩn Apple Human Interface Guidelines.
+* 📝 **Quản lý gõ tắt ưu việt:**
+  - Nhập danh sách từ Excel (`.xlsx`) hoặc tệp `.csv`.
+  - Xuất danh sách ra Excel / CSV chuẩn hoá Unicode Dựng Sẵn (NFC), mở trên mọi máy tính và phiên bản Microsoft Excel không bao giờ bị lỗi font.
+  - Nút **"Thêm mới"** nhanh chóng, huy hiệu đếm số lượng từ tắt hiện có và nút thùng rác xoá an toàn.
+* 🔄 **Cập nhật trực tiếp từ GitHub Releases:** Đối chiếu phiên bản qua GitHub Releases API. Khi có bản mới, bạn chỉ cần bấm **"Cập nhật ngay"** để tải file `.dmg` về máy.
+* 🚀 **Universal 2 siêu nhẹ:** Biên dịch tối ưu chạy gốc (Native) cho cả Apple Silicon (`arm64`) và Intel (`x86_64`), tiêu thụ cực ít tài nguyên RAM và pin.
+* 🛡️ **Minh bạch & An toàn:** 100% mã nguồn mở GPLv3, không chứa mã theo dõi thao tác phím (keylogger), tôn trọng tuyệt đối quyền riêng tư.
 
 > [!WARNING]
-> **Tránh xung đột bộ gõ:** Khi sử dụng MacKey, bạn nên tắt hẳn hoặc xóa các bộ gõ tiếng Việt khác đang chạy trên hệ thống (chẳng hạn như bộ gõ mặc định của macOS hoặc EVKey) vì việc chạy song song hai chương trình bộ gõ sẽ gây xung đột phím và dẫn đến hoạt động không chính xác.
+> **Tránh xung đột bộ gõ:** Khi sử dụng MacKey, hãy tắt hoặc xoá các bộ gõ tiếng Việt mặc định khác của macOS (như *Vietnamese Simple Telex* trong Cài đặt bàn phím) hoặc tắt EVKey để tránh tình trạng hai bộ gõ cùng xử lý phím gây nhảy chữ.
 
 ---
 
-## 📸 Hình ảnh giao diện
+## 📸 Tổng quan giao diện & Chức năng
+
+### 1. Menu thanh trạng thái (Menu Bar)
+Biểu tượng của MacKey hiển thị trực tiếp trên thanh menu góc trên màn hình:
+* **Chữ V (màu đỏ):** Đang bật chế độ gõ Tiếng Việt.
+* **Chữ E (màu xám):** Đang ở chế độ gõ Tiếng Anh.
+
+Bấm chuột vào biểu tượng để mở menu thao tác nhanh:
 
 <p align="center">
-  <img width="500" alt="Menu Bar" src="https://github.com/user-attachments/assets/ebc574b4-bcd7-4b76-884b-e020b8beeb9a" />
-  <br>
-  <em>Tích hợp trên Menu Bar giúp theo dõi trạng thái và chuyển đổi chế độ nhanh chóng</em>
+  <img src="assets/menu_bar.png" width="320" alt="Menu Bar MacKey" />
 </p>
 
+* Bật/tắt nhanh Tiếng Việt (hoặc bấm phím tắt nhanh).
+* Chọn kiểu gõ: **Telex**, **VNI**, **Simple Telex**.
+* Chọn nhanh bảng mã: **Unicode dựng sẵn**, **TCVN3 (ABC)**, **VNI Windows**...
+* Mở nhanh **Công cụ chuyển mã...**, **Bảng điều khiển...**, **Gõ tắt...**, **Giới thiệu**.
+
+---
+
+### 2. Bảng điều khiển chính (Dashboard)
+
+Giao diện Bảng điều khiển được tổ chức khoa học thành 4 tab chức năng:
+
+#### Tab "Bộ gõ" — Tinh chỉnh engine gõ tiếng Việt
 <p align="center">
-  <img width="600" alt="Bộ gõ - Input Method" src="https://github.com/user-attachments/assets/ee503ee2-450a-4cda-8d08-b08f01be0deb" />
-  <br>
-  <em>Tab "Bộ gõ" - Tinh chỉnh kiểu gõ và các quy tắc đặt dấu tiếng Việt</em>
+  <img src="assets/tab_bogo.png" width="580" alt="Tab Bộ gõ" />
 </p>
 
+* **Kiểu gõ & Bảng mã:** Tuỳ chọn kiểu gõ phổ biến (Telex, VNI) và bảng mã xuất văn bản.
+* **Phím chuyển chế độ (Switch Key):** Thiết lập tổ hợp phím đổi ngôn ngữ nhanh (ví dụ: `⌥ Option + Z`, `⌃ Control + Space`, `⌘ Command + ⇧ Shift`...) kèm tuỳ chọn âm thanh báo.
+* **Tùy chọn gõ nâng cao:**
+  - Bật/tắt kiểm tra chính tả thời gian thực (tạm tắt nhanh bằng giữ phím `⌃ Control`).
+  - Hỗ trợ chuẩn chính tả hiện đại: **Đặt dấu oà, uý** (thay vì kiểu cũ *òa, úy*).
+  - Tự động khôi phục phím gốc khi phát hiện từ sai chính tả.
+  - Cho phép dùng `z, w, j, f` làm phụ âm độc lập.
+
+#### Tab "Gõ tắt" — Cấu hình mở rộng & Tốc ký
 <p align="center">
-  <img width="600" alt="Gõ tắt - Text Expansion" src="https://github.com/user-attachments/assets/93dd30a3-f32e-4564-b11d-b46961945e93" />
-  <br>
-  <em>Tab "Gõ tắt" - Quản lý viết tắt nhanh và đồng bộ từ macOS</em>
+  <img src="assets/tab_gotat.png" width="580" alt="Tab Gõ tắt" />
 </p>
 
+* **Cho phép gõ tắt:** Bật/tắt toàn bộ tính năng viết tắt.
+* **Gõ tắt cả khi ở chế độ Tiếng Anh:** Giúp bạn gõ từ viết tắt bất kỳ lúc nào.
+* **Tự động viết hoa theo phím tắt:** Gõ `Btw` → ra *By the way*, gõ `BTW` → ra *BY THE WAY*.
+* **Gõ nhanh phụ âm đôi:** `cc` → `ch`, `gg` → `gi`, `kk` → `kh`, `nn` → `ng`, `qq` → `qu`, `pp` → `ph`, `tt` → `th`.
+* **Gõ tắt phụ âm đầu/cuối:** Viết nhanh `f` → `ph`, `j` → `gi`, `w` → `qu`, `g` → `ng`, `h` → `nh`...
+* Nút **"Mở bảng gõ tắt..."** để quản lý danh sách từ tắt chi tiết.
+
+#### Tab "Hệ thống" — Tùy chọn hệ thống & Tương thích
 <p align="center">
-  <img width="600" alt="Hệ thống - System" src="https://github.com/user-attachments/assets/b6336df5-896f-4f50-9685-e08eaacc849a" />
-  <br>
-  <em>Tab "Hệ thống" - Tự động khởi động, viết hoa đầu câu và tùy chọn tương thích</em>
+  <img src="assets/tab_hethong.png" width="580" alt="Tab Hệ thống" />
 </p>
 
-<p align="center">
-  <img width="600" alt="Thông tin - Information" src="https://github.com/user-attachments/assets/dc251817-4fac-4afc-8bab-8a8a7c4139dc" />
-  <br>
-  <em>Tab "Thông tin" - Chi tiết phiên bản ứng dụng và giấy phép bản quyền</em>
-</p>
+* **Khởi động cùng macOS:** Đảm bảo bộ gõ luôn chạy tự động mỗi khi mở máy.
+* **Tùy chọn hiển thị:** Hiện/ẩn cửa sổ khi khởi động, ẩn icon thanh Dock.
+* **Tương thích layout khác:** Hỗ trợ người dùng bàn phím bố cục **Dvorak**, **Colemak**...
+* **Kiểm tra phiên bản mới:** Tự động kiểm tra bản cập nhật lúc mở ứng dụng.
+
+---
+
+### 3. Quản lý gõ tắt chuyên nghiệp (Macro)
+
+Cửa sổ "Thiết lập gõ tắt" được thiết kế tối ưu với khả năng co giãn linh hoạt:
 
 <p align="center">
-  <img width="550" alt="Công cụ chuyển mã - Transcoding Tool" src="https://github.com/user-attachments/assets/18f5988c-0cff-4c5f-9cab-e26aaa0bb7ea" />
-  <br>
-  <em>Công cụ chuyển mã văn bản trong Clipboard vô cùng mạnh mẽ</em>
+  <img src="assets/macro_manager.png" width="600" alt="Cửa sổ Thiết lập gõ tắt" />
 </p>
 
+* **Bố cục co giãn thông minh (Responsive):** Khi phóng to cửa sổ, cột "Nội dung đầy đủ" tự động mở rộng bao phủ toàn bộ bảng, các nút chức năng neo chuẩn góc trên bên phải.
+* **Thao tác thêm mới thông minh:** Khi bạn nhấp chọn 1 từ có sẵn trong danh sách, nút **"Thêm mới"** sẽ xuất hiện ngay trên đầu nút **"Xoá"**. Bấm "Thêm mới" sẽ tự động xoá sạch 2 ô nhập liệu để sẵn sàng nhập từ mới.
+
 <p align="center">
-  <img width="600" alt="Đề xuất - Recommendation" src="https://github.com/user-attachments/assets/47681b2e-98e2-4988-a317-829f73ba42dd" />
-  <br>
-  <em>Gợi ý từ vựng thông minh trong quá trình nhập liệu</em>
+  <img src="assets/macro_them_moi.png" width="600" alt="Nút Thêm mới xếp chồng" />
+</p>
+
+* **Huy hiệu số lượng & Xoá tất cả an toàn:**
+  - Góc phải dưới cùng hiển thị huy hiệu số lượng: `[📖] [77 từ tắt]`.
+  - Icon thùng rác kế bên cho phép xoá tất cả dữ liệu gõ tắt hiện có với hộp thoại xác nhận chuyên nghiệp, icon và tiêu đề căn giữa:
+
+<p align="center">
+  <img src="assets/macro_delete_confirmation.png" width="340" alt="Hộp thoại xác nhận xoá toàn bộ" />
+</p>
+
+* **Nhập / Xuất Excel (.xlsx) & CSV chuẩn Unicode (NFC):**
+  - Bấm **"Nhập từ Excel..."** để nhập hàng loạt danh sách từ bảng tính.
+  - Bấm **"Xuất File..."** để lưu bảng gõ tắt ra tệp Excel `.xlsx` hoặc `.csv` (UTF-8 BOM). Đảm bảo mở trên mọi phiên bản Excel (Windows & Mac) hiển thị tiếng Việt trọn vẹn, không bao giờ lỗi font:
+
+<p align="center">
+  <img src="assets/macro_export.png" width="340" alt="Hộp thoại Xuất file Excel/CSV" />
 </p>
 
 ---
 
-## ⌨️ Khả năng hỗ trợ
+### 4. Công cụ chuyển mã văn bản (Convert Tool)
 
-### Kiểu gõ hỗ trợ
-* **Telex**
-* **VNI**
-* **Simple Telex**
+Mở từ Menu bar → **Công cụ chuyển mã...**:
 
-### Bảng mã thông dụng
-* **Unicode** (Unicode dựng sẵn)
-* **TCVN3** (ABC)
-* **VNI Windows**
-* **Unicode Compound** (Unicode tổ hợp)
-* **Vietnamese Locale CP 1258**
-* *Và các bảng mã khác...*
+<p align="center">
+  <img src="assets/convert_tool.png" width="500" alt="Công cụ chuyển mã văn bản" />
+</p>
 
----
-
-## 🛠️ Chi tiết tính năng (MacKey)
-
-Hệ thống tính năng được tổ chức trực quan theo cấu trúc 4 tab chính trong Bảng điều khiển:
-
-### 1. Tab "Bộ gõ" - Engine gõ tiếng Việt
-* **Chuyển đổi ngôn ngữ cực nhanh:** Chuyển đổi qua lại giữa Tiếng Việt ⇄ Tiếng Anh dễ dàng thông qua giao diện ứng dụng hoặc phím tắt tự chọn.
-* **Gõ tắt phụ âm đôi (Quick Telex):** Tự động chuyển đổi các phụ âm kép đầu từ: `cc` → `ch`, `gg` → `gi`, `kk` → `kh`, `nn` → `ng`, `qq` → `qu`, `pp` → `ph`, `tt` → `th`.
-* **Gõ tắt phụ âm đầu:** Hỗ trợ viết nhanh phụ âm đầu: `f` → `ph` (*fa* → *pha*), `j` → `gi` (*ja* → *gia*), `w` → `qu` (*wa* → *qua*).
-* **Gõ tắt phụ âm cuối:** Chuyển đổi nhanh phụ âm cuối: `g` → `ng` (*tog* → *tong*), `h` → `nh` (*ah* → *anh*), `k` → `ch` (*ak* → *ach*).
-* **Tùy chọn tự do:**
-  * Cho phép giữ nguyên các ký tự `z`, `w`, `j`, `f` làm phụ âm riêng biệt (không tự động nắn thành âm tiếng Việt khác).
-  * Cho phép **Đặt dấu tự do** (bỏ qua quy tắc đặt dấu chuẩn để gõ dấu ở bất kỳ vị trí nào).
-  * Hỗ trợ kiểu **Đặt dấu oà/uý** (chuẩn chính tả hiện đại) thay thế cho kiểu *òa/úy* (chính tả cũ).
-* **Kiểm tra chính tả:**
-  * Bật/tắt tính năng kiểm tra chính tả thời gian thực khi gõ.
-  * Tự động khôi phục lại từ gốc khi phát hiện từ viết sai chính tả.
-  * Tạm thời vô hiệu hóa bộ kiểm tra chính tả bằng cách nhấn giữ phím `⌃ Control`.
-* **Phím chuyển chế độ (Switch Key):**
-  * Tự do thiết lập tổ hợp phím chuyển Việt/Anh: kết hợp bất kỳ giữa `⌃ Control` / `⌥ Option` / `⌘ Command` / `⇧ Shift` + 1 phím ký tự bất kỳ.
-  * Tùy chọn phát âm thanh báo (beep) khi chuyển đổi thành công.
-
-### 2. Tab "Gõ tắt" - Macro văn bản
-* **Quản lý từ viết tắt:** Giao diện Thêm / Sửa / Xóa danh sách gõ tắt trực quan. Khi gõ từ viết tắt, ứng dụng tự động thay thế bằng nội dung đầy đủ.
-* **Tùy chọn gõ tắt linh hoạt:**
-  * Bật/tắt toàn bộ tính năng gõ tắt chỉ với một thao tác.
-  * Cho phép áp dụng gõ tắt ngay cả khi đang ở chế độ gõ Tiếng Anh.
-  * **Tự động viết hoa thông minh theo phím tắt:** Gõ `Btw` → ra *By the way*, gõ `BTW` → ra *BY THE WAY*.
-* **Nhập/xuất hàng loạt qua Excel/CSV:** Nhập nhanh danh sách gõ tắt từ tệp Excel (`.xlsx`) hoặc CSV (Cột A là Từ viết tắt, Cột B là Nội dung đầy đủ), hoặc xuất toàn bộ danh sách hiện có ra tệp Excel/CSV qua hộp thoại chọn định dạng trực quan.
-* **Thao tác nhanh bằng bàn phím:** Nhấn `Return (Enter)` để chuyển tiêu điểm giữa ô "Từ gõ tắt" và "Nội dung đầy đủ", tự động thực hiện Thêm/Cập nhật.
-
-### 3. Tab "Hệ thống" - Thiết lập chung & Tương thích
-* **Khởi động cùng macOS:** Đảm bảo bộ gõ luôn sẵn sàng ngay khi mở máy.
-* **Tùy chọn hiển thị:** Ẩn/hiện cửa sổ điều khiển khi khởi động hoặc ẩn biểu tượng trên thanh Dock.
-* **Giao diện tối ưu:** Biểu tượng thanh Menu bar có màu xám dịu mắt, tương thích hoàn toàn với Dark Mode.
-* **Viết hoa chữ cái đầu câu:** Tự động viết hoa chữ cái sau các dấu kết thúc câu (. ? !), giữ chữ thường tự nhiên khi bắt đầu ô nhập mới hoặc chuyển ứng dụng.
-* **Tương thích Layout bàn phím khác:** Hỗ trợ xử lý chính xác khi người dùng sử dụng các bố cục bàn phím thay thế như **Dvorak** hay **Colemak** thay vì QWERTY chuẩn.
-* **Cập nhật & Cấu hình:**
-  * Tự động kiểm tra phiên bản mới khi khởi động & nút *Kiểm tra ngay*.
-  * Hỗ trợ nút khôi phục toàn bộ cấu hình về mặc định ban đầu.
-
-### 4. Công cụ chuyển mã (Convert Tool)
-*Cửa sổ độc lập, mở nhanh từ biểu tượng Menu bar:*
-* **Chuyển mã Clipboard:** Chuyển đổi qua lại giữa 5 bảng mã thông dụng cho dữ liệu văn bản đang có trong Clipboard (có nút `⇄` đảo chiều nhanh).
-* **Định dạng chữ nâng cao:**
-  * Chuyển toàn bộ sang chữ HOA / chữ thường.
-  * Viết hoa đầu câu / Viết Hoa Mỗi Chữ Cái Đầu Từ.
-* **Loại bỏ dấu câu:** Loại bỏ hoàn toàn dấu tiếng Việt (thích hợp để đổi tên file, tạo đường dẫn URL sạch).
-* **Phím tắt chuyển mã nhanh:** Thực hiện chuyển mã ngay lập tức dựa trên văn bản trong Clipboard bằng phím tắt tùy chỉnh mà không cần mở cửa sổ công cụ.
-* Tích hợp thông báo hệ thống khi hoàn thành chuyển đổi.
-
-### 5. Menu thanh trạng thái (Status Bar Menu)
-Bấm chuột vào biểu tượng MacKey trên thanh menu để:
-* Bật/tắt nhanh Tiếng Việt.
-* Đổi nhanh kiểu gõ (Telex / VNI).
-* Đổi nhanh giữa 3 bảng mã phổ biến nhất (Unicode, TCVN3, VNI Windows).
-* Truy cập nhanh: Công cụ chuyển mã, Chuyển mã nhanh, Bảng điều khiển, Gõ tắt, Giới thiệu và Thoát ứng dụng.
+* Chuyển mã văn bản có sẵn trong bộ nhớ tạm (Clipboard) giữa các bảng mã: Unicode, TCVN3 (ABC), VNI Windows, VIQR... (có nút `⇄` đảo ngược chiều nhanh).
+* Các tuỳ chọn nâng cao:
+  - Chuyển toàn bộ sang chữ HOA / chữ thường.
+  - Viết hoa đầu câu / Viết Hoa Chữ Cái Đầu Mỗi Từ.
+  - **Loại bỏ dấu tiếng Việt** (rất tiện để đổi tên file, đặt URL slug).
+* Hỗ trợ **phím tắt chuyển mã nhanh Clipboard** mà không cần mở cửa sổ.
 
 ---
 
-## 📥 Hướng dẫn cài đặt chi tiết
+### 5. Kiểm tra cập nhật tự động từ GitHub
+
+Mở từ Menu bar → **Giới thiệu**:
+
+<p align="center">
+  <img src="assets/about_window.png" width="560" alt="Cửa sổ Giới thiệu" />
+</p>
+
+* Giao diện tinh gọn với 2 dòng liên kết chính: **GitHub** và **Phiên bản mới**.
+* Nút **"Kiểm tra bản mới..."** tự động đối chiếu với phiên bản mới nhất trên GitHub Releases:
+  - **Nếu đã là bản mới nhất:** Hiện hộp thoại xác nhận giao diện đẹp mắt:
+    <p align="center">
+      <img src="assets/check_update_latest.png" width="340" alt="Thông báo đã ở bản mới nhất" />
+    </p>
+  - **Nếu có bản cập nhật mới trên GitHub:** Xuất hiện hộp thoại hỏi bạn có muốn cập nhật hay không, cung cấp nút **"Cập nhật ngay"** (tải trực tiếp file cài đặt `.dmg` từ Git), **"Xem trên GitHub"** hoặc **"Để sau"**.
+
+---
+
+## 📥 Hướng dẫn cài đặt & Cấp quyền chi tiết
 
 ### Yêu cầu hệ thống
-* macOS 10.15 (Catalina) trở lên.
-* Hỗ trợ nền tảng Universal (chạy mượt mà trên cả chip Intel và Apple Silicon M1/M2/M3/M4...).
+* Máy Mac chạy **macOS 10.15 (Catalina)** trở lên (hỗ trợ đầy đủ macOS 11 Big Sur, macOS 12 Monterey, macOS 13 Ventura, macOS 14 Sonoma, **macOS 15+ Sequoia**).
+* Chạy Native trên mọi dòng chip **Apple Silicon (M1, M2, M3, M4)** và **Intel**.
 
-### Bước 1: Tải file cài đặt
-1. Truy cập trang Releases chính thức: [MacKey Releases](https://github.com/dinhphu-0124/MacKey/releases)
-2. Tải về file `.dmg` mới nhất (ví dụ: `MacKey-1.0.1.dmg`).
+---
 
-### Bước 2: Tiến hành cài đặt
-1. Mở file `.dmg` vừa tải về (double-click vào file).
-2. Kéo biểu tượng **MacKey** ở bên trái và thả vào thư mục **Applications** (Ứng dụng) ở bên phải.
-3. Chờ vài giây để hệ thống hoàn tất sao chép. Sau đó, bạn có thể đóng cửa sổ `.dmg` và click chuột phải vào ổ đĩa ảo MacKey trên màn hình chính chọn **Eject** (Trục xuất) rồi xóa file cài đặt `.dmg` để giải phóng bộ nhớ.
+### Bước 1: Tải về và cài đặt từ file DMG
 
-### Bước 3: Mở ứng dụng lần đầu (Vượt cảnh báo Gatekeeper)
-Do ứng dụng chưa được Apple ký số công chứng (notarize), hệ thống sẽ cảnh báo ngăn chặn ở lần chạy đầu tiên:
-1. Mở Finder và truy cập thư mục **Applications**, tìm đến **MacKey**.
-2. Click chuột phải (hoặc nhấn giữ phím `Control` + click) vào **MacKey** → chọn **Open**.
-3. Một hộp thoại xuất hiện với thông báo *"macOS không thể xác minh nhà phát triển..."* → Hãy nhấn **Open** một lần nữa để xác nhận mở.
-   > [!NOTE]
-   > Bạn chỉ cần thực hiện thao tác click chuột phải này duy nhất một lần đầu tiên. Từ những lần sau, bạn có thể double-click mở app bình thường.
-   > *Nếu trước đó bạn lỡ double-click thông thường và bị chặn hoàn toàn không có nút Open, hãy truy cập **System Settings (Cài đặt hệ thống) → Privacy & Security (Quyền riêng tư & Bảo mật)**, cuộn xuống dưới cùng và nhấn **Open Anyway (Vẫn mở)** để cấp quyền.*
+1. Truy cập [Trang Releases của MacKey](https://github.com/dinhphu-0124/MacKey/releases/latest) và tải file **`MacKey-1.0.2.dmg`**.
+2. Nhấp đúp chuột (double-click) vào file `.dmg` vừa tải về để mở cửa sổ cài đặt.
+3. **Kéo biểu tượng MacKey** ở bên trái và **thả vào thư mục Applications** ở bên phải:
 
-### Bước 4: Cấp quyền Trợ năng (Accessibility)
-Để MacKey có thể can thiệp và chèn các ký tự tiếng Việt vào các ứng dụng khác, quyền Trợ năng là bắt buộc:
-1. Ngay sau khi mở app, hộp thoại *"MacKey cần bạn cấp quyền để có thể hoạt động!"* sẽ xuất hiện → Nhấn nút **Cấp quyền**.
-2. Hệ thống sẽ tự động chuyển hướng đến mục: **System Settings → Privacy & Security → Accessibility**.
-3. Hãy tìm **MacKey** trong danh sách và gạt công tắc sang bên phải (màu xanh). Có thể hệ thống sẽ yêu cầu bạn nhập mật khẩu máy hoặc quét Touch ID để xác nhận.
-4. Đóng cửa sổ Cài đặt hệ thống, khởi động lại MacKey để quyền được áp dụng hoàn toàn.
+<p align="center">
+  <img src="assets/install_dmg.png" width="560" alt="Kéo thả cài đặt MacKey từ DMG" />
+</p>
 
-### Bước 5: Kích hoạt tiến trình nền MacKeyHelper
-Tiến trình phụ trợ **MacKeyHelper** đảm nhiệm việc tự khởi động bộ gõ cùng macOS:
-1. Mở Bảng điều khiển MacKey → chuyển sang tab **Hệ thống**.
-2. Nếu tính năng "Khởi động cùng macOS" đang bật nhưng ứng dụng chưa tự khởi chạy, hãy tắt đi rồi bật lại công tắc này một lần để tái thiết lập.
-3. Để chắc chắn, bạn có thể kiểm tra tại **System Settings → General → Login Items**, đảm bảo **MacKeyHelper** đã có tên trong danh sách cho phép chạy nền.
+4. Chờ 2-3 giây để macOS sao chép xong. Sau đó bạn có thể đóng cửa sổ DMG và xóa file tải về.
 
-### Bước 6: Kiểm tra hoạt động
-1. Quan sát góc trên bên phải màn hình: Biểu tượng MacKey hiển thị chữ **V** (Tiếng Việt) hoặc **E** (Tiếng Anh).
-2. Nhấn vào biểu tượng hoặc sử dụng phím tắt chuyển đổi để đưa app về trạng thái chữ **V**.
-3. Mở một ứng dụng soạn thảo văn bản (như Notes, TextEdit) và gõ thử cụm từ: `Vieejt Nam` xem có hiển thị chính xác thành **Việt Nam** hay không.
+---
+
+### Bước 2: Mở ứng dụng lần đầu (Vượt Gatekeeper)
+
+Vì MacKey là phần mềm mã nguồn mở miễn phí và chưa đăng ký chứng chỉ nhà phát triển có phí của Apple, macOS sẽ hiển thị hộp thoại bảo vệ Gatekeeper ở lần mở đầu tiên.
+
+1. Mở **Finder** → chọn mục **Ứng dụng (Applications)** ở cột bên trái.
+2. Tìm đến biểu tượng **MacKey**:
+
+<p align="center">
+  <img src="assets/install_finder.png" width="620" alt="MacKey trong thư mục Applications" />
+</p>
+
+3. **Thao tác mở an toàn:**
+   - **Click chuột phải** (hoặc giữ phím `Control` rồi click) vào **MacKey** → chọn **Mở (Open)**.
+   - Hộp thoại cảnh báo bảo mật hiện ra → Nhấn nút **Mở (Open)** một lần nữa.
+   > [!TIP]
+   > Bạn chỉ cần thực hiện thao tác click chuột phải này **duy nhất 1 lần đầu tiên**. Từ các lần sau, bạn có thể click đúp mở app bình thường như mọi phần mềm khác.
+
+> [!NOTE]
+> *Nếu trước đó bạn lỡ click đúp và bị macOS chặn hoàn toàn:*  
+> Hãy mở **Cài đặt hệ thống (System Settings)** → **Quyền riêng tư & Bảo mật (Privacy & Security)** → cuộn xuống mục **Bảo mật** và nhấn nút **Vẫn mở (Open Anyway)** bên cạnh dòng thông báo MacKey.
+
+---
+
+### Bước 3: Cấp quyền Trợ năng (Accessibility) - Bắt buộc
+
+> [!IMPORTANT]
+> macOS yêu cầu quyền **Trợ năng (Accessibility)** đối với mọi bộ gõ (Unikey, EVKey, OpenKey, MacKey...) để ứng dụng có thể phát hiện phím bạn gõ và điền ký tự tiếng Việt có dấu vào các phần mềm khác (Word, Safari, Chrome, Telegram...).
+
+1. Khi bạn mở MacKey, hộp thoại yêu cầu cấp quyền sẽ hiện lên. Nhấn nút **Cấp quyền** (hoặc tự mở Cài đặt).
+2. Mở **Cài đặt hệ thống (System Settings)** trên máy Mac của bạn.
+3. Ở cột bên trái, chọn **Quyền riêng tư & Bảo mật (Privacy & Security)**.
+4. Ở danh sách bên phải, tìm và chọn mục **Trợ năng (Accessibility)**.
+5. Tìm tên **MacKey** trong danh sách và **gạt công tắc sang BẬT (Màu xanh)**:
+
+<p align="center">
+  <img src="assets/permission_accessibility.png" width="620" alt="Cấp quyền Trợ năng cho MacKey trong System Settings" />
+</p>
+
+6. Hệ thống có thể yêu cầu bạn nhập mật khẩu mở máy hoặc chạm vân tay **Touch ID** để xác nhận.
+7. Đóng cửa sổ Cài đặt. Bây giờ MacKey đã có đầy đủ quyền để hoạt động mượt mà!
+
+---
+
+### Bước 4: Bắt đầu gõ tiếng Việt & Tùy chọn phím tắt chuyển chế độ
+
+1. **Nhìn lên góc phải thanh menu:** Biểu tượng MacKey xuất hiện với chữ **V** (Tiếng Việt) hoặc **E** (Tiếng Anh).
+2. **Chuyển đổi nhanh chế độ gõ:**
+   - **Click chuột trực tiếp:** Nhấp chuột vào biểu tượng `[E]` trên thanh menu để đổi sang `[V]` (hoặc ngược lại).
+   - **Phím tắt mặc định:** Bấm tổ hợp **`⌥ Option + Z`**.
+3. **Tùy chỉnh tổ hợp phím tắt theo ý thích (Không cố định phím "Z"):**
+   - Bạn hoàn toàn có thể tự chọn **bất kỳ tổ hợp phím nào quen thuộc** (giống Unikey, EVKey trên Windows hoặc các bộ gõ khác):
+     - Click biểu tượng MacKey trên Menu bar ➔ chọn **Bảng điều khiển** (hoặc mở cửa sổ chính).
+     - Vào tab **Bộ gõ** ➔ tìm khu vực **Phím chuyển chế độ**.
+     - **Tùy chọn phím bổ trợ:** Tích chọn bất kỳ tổ hợp nào bạn muốn trong `⌃` (Control), `⌥` (Option), `⌘` (Command), `⇧` (Shift).
+     - **Tùy chọn phím ký tự:**
+       - Click vào ô ký tự và gõ bất kỳ phím nào bạn muốn (ví dụ: `Z`, `S`, `W`, `1`...).
+       - Hoặc gõ phím **Space** để dùng phím Cách (ví dụ: `⌃ Control + Space`, `⌥ Option + Space`).
+       - Hoặc nhấn phím **Delete / Backspace** để xóa trống ô ký tự nếu bạn muốn dùng **chỉ 2 phím bổ trợ** như `⌃ Control + ⇧ Shift` (chuẩn phím quen thuộc trên Windows).
+     - **Âm thanh:** Tích chọn *"Âm thanh"* nếu muốn máy phát tiếng beep nhẹ mỗi khi chuyển chế độ thành công.
+     - *Mọi thay đổi có hiệu lực ngay lập tức mà không cần khởi động lại ứng dụng!*
+4. **Gõ thử tiếng Việt:** Mở một trình soạn thảo bất kỳ (Ghi chú, TextEdit, trình duyệt...) và gõ thử:
+   ```
+   Vieejt Nam quee huwowng toio -> Việt Nam quê hương tôi
+   ```
+
+---
+
+## ⌨️ Các kiểu gõ & Bảng mã hỗ trợ
+
+### Kiểu gõ tiếng Việt
+| Kiểu gõ | Quy tắc gõ dấu cơ bản |
+| :--- | :--- |
+| **Telex** | `s`: sắc, `f`: huyền, `r`: hỏi, `x`: ngã, `j`: nặng, `aa` → â, `aw` → ă, `ee` → ê, `oo` → ô, `ow` → ơ, `uw` → ư, `dd` → đ |
+| **VNI** | `1`: sắc, `2`: huyền, `3`: hỏi, `4`: ngã, `5`: nặng, `6`: â/ê/ô, `7`: ơ/ư, `8`: ă, `9`: đ |
+| **Simple Telex** | Đơn giản hóa các phím tổ hợp phụ âm kép |
+
+### Bảng mã tiếng Việt
+* **Unicode dựng sẵn:** Bảng mã chuẩn quốc tế phổ biến nhất hiện nay.
+* **TCVN3 (ABC):** Dùng cho các font cổ điển dạng `.VnTime`, `.VnArial`...
+* **VNI Windows:** Dùng cho font `VNI-Times`, `VNI-Helve`...
+* **Unicode tổ hợp (Compound):** Dùng cho một số hệ thống cũ hoặc phần mềm chuyên dụng.
+* **Vietnamese Locale CP 1258:** Bảng mã của Microsoft Windows.
 
 ---
 
 ## 🔍 Xử lý sự cố thường gặp
 
-| Vấn đề | Nguyên nhân | Cách khắc phục |
+| Tình huống | Nguyên nhân | Cách xử lý |
 | :--- | :--- | :--- |
-| **Gõ không ra dấu tiếng Việt** | Ứng dụng đang ở chế độ gõ tiếng Anh. | Kiểm tra biểu tượng trên Menu bar, chuyển trạng thái sang chữ **V** (màu đỏ). |
-| **App báo lỗi "Không thể mở vì tệp bị hỏng"** | Tệp tin cài đặt `.dmg` tải về bị lỗi, không toàn vẹn. | Xóa file cũ, tải lại tệp cài đặt mới từ trang Releases. |
-| **Đã cấp quyền Accessibility nhưng vẫn không gõ được** | Lỗi nhận diện quyền của hệ điều hành macOS. | Vào mục **Accessibility** trong cài đặt, tắt hẳn quyền của MacKey, tắt app. Sau đó mở lại app và bật lại quyền từ đầu. |
-| **Cập nhật lên bản mới bị mất quyền Accessibility** | Bản mới sử dụng Team ID hoặc chữ ký số khác bản cũ. | Thực hiện cấp lại quyền Trợ năng cho app mới tương tự như **Bước 4**. |
-| **Biểu tượng không xuất hiện trên thanh Menu bar** | Tiến trình nền hỗ trợ chưa được khởi chạy. | Thực hiện lại các chỉ dẫn ở **Bước 5** để kích hoạt tiến trình nền `MacKeyHelper`. |
+| **Gõ chữ không ra dấu tiếng Việt** | Ứng dụng đang ở chế độ Tiếng Anh (icon chữ E). | Click vào icon trên Menu bar để chuyển sang chữ **V** (màu đỏ), hoặc bấm phím tắt chuyển chế độ (`⌥ Option + Z` hoặc tổ hợp bạn đã tùy chỉnh). |
+| **Đã bật chữ V nhưng vẫn không gõ được dấu** | Chưa cấp hoặc bị mất quyền Trợ năng (Accessibility). | Vào **Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Trợ năng**, tắt công tắc MacKey rồi bật lại. Khởi động lại MacKey. |
+| **Bị nhảy chữ, lặp chữ hoặc mất dấu** | Xung đột với bộ gõ tiếng Việt mặc định của macOS. | Mở **Cài đặt hệ thống → Bàn phím → Nguồn đầu vào (Input Sources)**, xoá bỏ các bộ gõ tiếng Việt mặc định (chỉ giữ lại nguồn *U.S.* hoặc *Tiếng Anh*). |
+| **Bộ gõ không tự bật khi khởi động lại máy** | Tuỳ chọn khởi động cùng hệ thống chưa được kích hoạt. | Mở Bảng điều khiển MacKey → Tab **Hệ thống** → Gạt bật **Khởi động cùng macOS**. |
+| **Mở app bị thông báo tệp bị hỏng hoặc không rõ nguồn gốc** | Cơ chế Gatekeeper chặn file tải từ Internet. | Click chuột phải vào MacKey trong thư mục `Applications` → chọn **Open**, xem chi tiết tại [Bước 2](#bước-2-mở-ứng-dụng-lần-đầu-vượt-gatekeeper). |
 
 ---
 
 ## 🗑️ Hướng dẫn gỡ cài đặt sạch sẽ
 
-Nếu bạn không muốn sử dụng ứng dụng nữa và muốn dọn dẹp sạch sẽ hệ thống:
-
-1. Click vào biểu tượng MacKey trên thanh Menu bar → chọn **Thoát**.
-2. Truy cập thư mục **Applications**, kéo tệp **MacKey.app** bỏ vào **Trash** (Thùng rác).
-3. **Dọn sạch các file cấu hình tạm (Tùy chọn):**
-   * Mở Finder, nhấn tổ hợp phím `⌘ Command + ⇧ Shift + G` và dán đường dẫn: `~/Library/Preferences/`
-   * Tìm và xóa file: `com.dinhphu.mackey.plist`
-   * Truy cập **System Settings → General → Login Items** và xóa bỏ dòng **MacKeyHelper** nếu còn sót lại.
+Nếu bạn muốn gỡ cài đặt MacKey hoàn toàn khỏi hệ thống:
+1. Click vào biểu tượng MacKey trên Menu bar → chọn **Thoát (Quit)**.
+2. Mở thư mục **Applications**, kéo **MacKey.app** bỏ vào **Trash (Thùng rác)**.
+3. *(Tuỳ chọn dọn sạch file cấu hình)*:
+   - Mở Finder, nhấn tổ hợp phím `⌘ Command + ⇧ Shift + G` và dán:
+     ```bash
+     ~/Library/Preferences/com.dinhphu.mackey.plist
+     ```
+   - Xoá tệp tin này nếu có.
 
 ---
 
-## Giấy phép — GPLv3
+## 📜 Giấy phép & Tác giả
 
-MacKey phát hành theo giấy phép **GPLv3**
-- Dựa trên: <https://github.com/tuyenvm/OpenKey> - tác giả gốc: Tuyền Mai và cộng đồng OpenKey (GPLv3).
-- Bản chỉnh sửa bởi: **DinhPhu** © 2026
-- Mọi góp ý, gửi cho mình qua emai: dinhphuhcmus15@gmail.com
+* **Giấy phép:** [GNU General Public License v3.0 (GPLv3)](https://www.gnu.org/licenses/gpl-3.0).
+* **Nền tảng mã nguồn gốc:** Kế thừa từ dự án [OpenKey](https://github.com/tuyenvm/OpenKey) của tác giả **Tuyền Mai** và cộng đồng OpenKey.
+* **Bản phát triển & Tối ưu hóa:** **DinhPhu** © 2026.
+* **Đóng góp & Phản hồi:** Mọi thắc mắc hoặc yêu cầu tính năng, xin vui lòng tạo [Issue trên GitHub](https://github.com/dinhphu-0124/MacKey/issues) hoặc liên hệ qua email: `dinhphuhcmus15@gmail.com`.
