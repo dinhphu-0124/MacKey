@@ -912,7 +912,10 @@ DQ
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <switch toolTip="Tự động viết hoa kết quả nếu gõ tắt bằng chữ hoa (VD: VN -&gt; VIỆT NAM)" verticalHuggingPriority="750" fixedFrame="YES" controlSize="small" translatesAutoresizingMaskIntoConstraints="NO" id="74U-4J-gv7">
+                                                    <switch toolTip="VD: bạn định nghĩa &quot;ko=không&quot;
+Nếu bạn gõ: &quot;ko&quot; sẽ thành &quot;không&quot;
+Nếu bạn gõ &quot;Ko&quot; sẽ thành &quot;Không&quot;
+Nếu bạn gõ &quot;KO&quot; sẽ thành &quot;KHÔNG&quot;" verticalHuggingPriority="750" fixedFrame="YES" controlSize="small" translatesAutoresizingMaskIntoConstraints="NO" id="74U-4J-gv7">
                                                         <rect key="frame" x="376" y="228" width="38" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                                                         <connections>
@@ -1251,7 +1254,7 @@ DQ
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bXh-ai-gk3">
                                                         <rect key="frame" x="106" y="372" width="310" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Phiên bản 1.0.2" id="Wf7-Xb-12u">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Phiên bản 1.0.3" id="Wf7-Xb-12u">
                                                             <font key="font" metaFont="cellTitle"/>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1278,16 +1281,18 @@ DQ
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                     </box>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qlz-Sz-VDa">
-                                                        <rect key="frame" x="16" y="150" width="396" height="170"/>
+                                                        <rect key="frame" x="16" y="60" width="396" height="270"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" selectable="YES" alignment="justified" id="e0D-5o-KqO">
+                                                        <textFieldCell key="cell" selectable="YES" alignment="left" id="e0D-5o-KqO">
                                                             <font key="font" metaFont="cellTitle"/>
                                                             <string key="title">MacKey là chương trình gõ Tiếng Việt mã nguồn mở hiện đại, nhanh, nhẹ và an toàn dành cho macOS.
 
-• Tối ưu tương thích hoàn hảo với các phiên bản macOS mới.
-• Tự động viết hoa chữ cái đầu khi bắt đầu gõ vào một ô nhập liệu mới.
-• Hỗ trợ đa dạng bảng mã và kiểu gõ phổ biến: Telex, VNI, Simple Telex.
-• Nhập nhanh dữ liệu gõ tắt từ tệp Excel (.xlsx) hoặc tệp CSV.</string>
+• Tương thích tối ưu: Tối ưu cho chip Apple Silicon và Intel, hoạt động mượt mà từ macOS 10.15 đến macOS 15+ Sequoia.
+• Viết hoa thông minh: Tự động viết hoa chữ đầu câu sau dấu kết thúc câu (., ?, !) và sau phím Enter.
+• Gõ tắt và Gợi ý nổi: Hiển thị popup gợi ý từ hoàn chỉnh khi gõ tắt, viết hoa thông minh theo ngữ cảnh câu.
+• Quản lý gõ tắt chuyên nghiệp: Hỗ trợ nhập và xuất dữ liệu từ tệp Excel (.xlsx) hoặc CSV chuẩn Unicode (NFC).
+• Công cụ chuyển mã đa năng: Chuyển đổi mã Clipboard nhanh chóng, đổi chữ HOA/thường, loại bỏ dấu tiếng Việt.
+• Đa dạng kiểu gõ và bảng mã: Hỗ trợ Telex, VNI, Simple Telex, chính tả hiện đại (oà, uý), TCVN3, VNI Windows...</string>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -1362,6 +1367,7 @@ DQ
                         <outlet property="SuggestMacro" destination="sw-suggestmacro" id="out-suggestmacro"/>
                         <outlet property="UseModernOrthography" destination="r8q-NU-lqe" id="lmX-Q6-FBh"/>
                         <outlet property="VersionInfo" destination="bXh-ai-gk3" id="jxu-Bo-Ajq"/>
+                        <outlet property="aboutDescription" destination="qlz-Sz-VDa" id="out-aboutdesc"/>
                         <outlet property="VietButton" destination="qjz-9i-VOQ" id="Jpa-0e-ZDo"/>
                         <outlet property="appOK" destination="S26-ZU-sFD" id="f3J-H0-epQ"/>
                         <outlet property="permissionWarning" destination="5SM-Mt-ady" id="MSR-ei-1L6"/>
@@ -1586,21 +1592,9 @@ DQ
                                     <action selector="onExportFile:" target="XIf-Yi-IFu" id="exp-mac-act"/>
                                 </connections>
                             </button>
-                            <button toolTip="VD: bạn định nghĩa &quot;ko=không&quot;Nếu bạn gõ: &quot;ko&quot; sẽ thành &quot;không&quot;Nếu bạn gõ &quot;Ko&quot; sẽ thành &quot;Không&quot;Nếu bạn gõ &quot;KO&quot; sẽ thành &quot;KHÔNG&quot;" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXc-GH-oYK">
-                                <rect key="frame" x="252" y="17" width="220" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="check" title="Tự động viết hoa theo phím tắt" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="JdD-dm-U8K">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="onAutoCapButton:" target="XIf-Yi-IFu" id="0vN-JT-uLd"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="AutoCapsMacro" destination="LXc-GH-oYK" id="Jan-Or-2VK"/>
                         <outlet property="buttonAdd" destination="BJd-R9-7bL" id="fb4-JF-Jqo"/>
                         <outlet property="buttonDelete" destination="RDY-CW-mUe" id="del-btn-out"/>
                         <outlet property="macroContent" destination="e48-Ve-MTZ" id="46P-f6-xbt"/>

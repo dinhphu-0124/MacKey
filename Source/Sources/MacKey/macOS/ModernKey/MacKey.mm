@@ -758,17 +758,6 @@ CGEventRef MacKeyCallback(CGEventTapProxy proxy, CGEventType type,
                         : (_flag & kCGEventFlagMaskAlphaShift ? 2 : 0),
                     OTHER_CONTROL_KEY);
 
-    if (vUseMacro && vSuggestMacro && pData->code != vReplaceMaro) {
-      string shortcut, content;
-      if (vCheckMacroSuggestion(shortcut, content)) {
-        NSString *nsContent = [NSString stringWithUTF8String:content.c_str()];
-        NSString *nsShortcut = [NSString stringWithUTF8String:shortcut.c_str()];
-        [[MacroSuggestionController sharedController] showSuggestion:nsContent shortcut:nsShortcut];
-      } else {
-        [[MacroSuggestionController sharedController] hideSuggestion];
-      }
-    }
-
     if (pData->code == vDoNothing) {    // do nothing
       if (IS_DOUBLE_CODE(vCodeTable)) { // VNI
         if (pData->extCode == 1) {      // break key
@@ -788,6 +777,18 @@ CGEventRef MacKeyCallback(CGEventTapProxy proxy, CGEventType type,
           InsertKeyLength(1);
         }
       }
+
+      if (vUseMacro && vSuggestMacro) {
+        string shortcut, content;
+        if (vCheckMacroSuggestion(shortcut, content)) {
+          NSString *nsContent = [NSString stringWithUTF8String:content.c_str()];
+          NSString *nsShortcut = [NSString stringWithUTF8String:shortcut.c_str()];
+          [[MacroSuggestionController sharedController] showSuggestion:nsContent shortcut:nsShortcut];
+        } else {
+          [[MacroSuggestionController sharedController] hideSuggestion];
+        }
+      }
+
       return event;
     } else if (pData->code == vWillProcess || pData->code == vRestore ||
                pData->code ==
@@ -802,6 +803,17 @@ CGEventRef MacKeyCallback(CGEventTapProxy proxy, CGEventType type,
 
       // send new character
       SendNewCharString();
+
+      if (vUseMacro && vSuggestMacro) {
+        string shortcut, content;
+        if (vCheckMacroSuggestion(shortcut, content)) {
+          NSString *nsContent = [NSString stringWithUTF8String:content.c_str()];
+          NSString *nsShortcut = [NSString stringWithUTF8String:shortcut.c_str()];
+          [[MacroSuggestionController sharedController] showSuggestion:nsContent shortcut:nsShortcut];
+        } else {
+          [[MacroSuggestionController sharedController] hideSuggestion];
+        }
+      }
     } else if (pData->code == vReplaceMaro) { // MACRO
       handleMacro();
     }

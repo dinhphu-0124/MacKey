@@ -1,5 +1,18 @@
 # Change Log
 
+##### Version 1.0.4: (2026)
+- **Thiết kế lại bố cục & tối ưu thanh chân trang cửa sổ Gõ tắt (Macro):**
+  - Loại bỏ tuỳ chọn trùng lặp "Tự động viết hoa theo phím tắt" khỏi cửa sổ Thiết lập gõ tắt (chỉ quản lý tập trung tại tab Gõ tắt trong Bảng điều khiển).
+  - Di chuyển huy hiệu số lượng `📖 75 từ tắt` vào giữa thanh công cụ chân trang, đặt liền sau nút "Xuất File...".
+  - Tách nút Thùng rác 🗑️ sang góc dưới bên phải ngoài cùng với màu đỏ cảnh báo (`systemRedColor`).
+- **Tooltip hướng dẫn trực quan cho tính năng "Tự động viết hoa theo phím tắt":**
+  - Hiển thị đầy đủ ví dụ minh hoạ khi di chuột qua nút gạt tại Bảng điều khiển (ko=không ➔ ko=không, Ko=Không, KO=KHÔNG).
+- **Làm mới toàn diện tab "Thông tin" trong Bảng điều khiển:**
+  - Cập nhật danh sách tính năng mới nhất: Viết hoa thông minh, Gợi ý nổi tức thì, Quản lý Excel/CSV, Công cụ chuyển mã, Đa dạng bảng mã.
+  - Áp dụng kỹ thuật thụt lề treo (Hanging Indent 22pt) với dấu chấm tròn xanh ngọc (Teal) chuẩn giao diện Apple, giúp dòng 2 và dòng 3 thẳng hàng tuyệt đối với chữ cái đầu dòng 1.
+- **Tối ưu hóa Engine gõ phím & Viết hoa sau dấu câu:**
+  - Sửa triệt để hiện tượng nuốt phím cách (Space) và đảm bảo tự động viết hoa chữ đầu câu sau các dấu kết thúc câu (`.`, `?`, `!`) và phím Enter hoạt động trơn tru.
+
 ##### Version 1.0.3: (2026)
 - **Gợi ý từ gõ tắt nổi (Inline Macro Suggestion Tooltip/Popover):**
   - Tự động hiển thị bong bóng popover bo góc mềm mại ngay trên con trỏ soạn thảo văn bản khi đang gõ từ tắt (ví dụ: `cty`, `sn`, `stkbidv`, `hthong`...).

@@ -96,8 +96,20 @@
 
 @end
 
+@interface MacroSuggestionPanel : NSPanel
+@end
+
+@implementation MacroSuggestionPanel
+- (BOOL)canBecomeKeyWindow {
+    return NO;
+}
+- (BOOL)canBecomeMainWindow {
+    return NO;
+}
+@end
+
 @interface MacroSuggestionController ()
-@property (nonatomic, strong) NSPanel *window;
+@property (nonatomic, strong) MacroSuggestionPanel *window;
 @property (nonatomic, strong) MacroSuggestionView *contentView;
 @property (nonatomic, copy, nullable) NSString *currentShortcut;
 @property (nonatomic, assign) BOOL isVisible;
@@ -128,10 +140,10 @@
 - (void)setupWindow {
     if (_window) return;
     
-    _window = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, 150, 36)
-                                        styleMask:NSWindowStyleMaskBorderless | NSWindowStyleMaskNonactivatingPanel
-                                          backing:NSBackingStoreBuffered
-                                            defer:NO];
+    _window = [[MacroSuggestionPanel alloc] initWithContentRect:NSMakeRect(0, 0, 150, 36)
+                                                      styleMask:NSWindowStyleMaskBorderless | NSWindowStyleMaskNonactivatingPanel
+                                                        backing:NSBackingStoreBuffered
+                                                          defer:NO];
     _window.level = NSPopUpMenuWindowLevel;
     _window.opaque = NO;
     _window.backgroundColor = [NSColor clearColor];
@@ -139,7 +151,7 @@
     _window.hidesOnDeactivate = NO;
     _window.canHide = NO;
     [_window setAcceptsMouseMovedEvents:YES];
-    [_window setBecomesKeyOnlyIfNeeded:YES];
+    [_window setBecomesKeyOnlyIfNeeded:NO];
     _window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorTransient;
     
     __weak typeof(self) weakSelf = self;
@@ -156,6 +168,9 @@
     
     AXUIElementRef appRef = AXUIElementCreateApplication(frontApp.processIdentifier);
     if (!appRef) return CGRectNull;
+    
+    // Prevent blocking or hanging the main run loop (max 30ms timeout)
+    AXUIElementSetMessagingTimeout(appRef, 0.03f);
     
     AXUIElementRef focusedElement = NULL;
     AXError err = AXUIElementCopyAttributeValue(appRef, kAXFocusedUIElementAttribute, (CFTypeRef *)&focusedElement);
@@ -300,11 +315,14 @@
 }
 
 - (void)hideSuggestion {
+    if (!_isVisible) {
+        return;
+    }
+    _isVisible = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self->_window) {
             [self->_window orderOut:nil];
         }
-        self->_isVisible = NO;
         self->_currentShortcut = nil;
     });
 }

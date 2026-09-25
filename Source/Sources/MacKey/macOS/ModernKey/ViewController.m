@@ -107,6 +107,8 @@ extern int vPerformLayoutCompat;
               objectForInfoDictionaryKey:@"CFBundleShortVersionString"],
           [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"],
           [MacKeyManager getBuildDate]];
+
+  [self setupAboutDescription];
 }
 
 - (void)viewDidAppear {
@@ -660,6 +662,96 @@ extern int vPerformLayoutCompat;
                        self.CheckNewVersionButton.title =
                            @"Kiểm tra bản mới...";
                      }];
+}
+
+- (void)setupAboutDescription {
+  if (!self.aboutDescription) return;
+
+  self.aboutDescription.frame = NSMakeRect(16, 60, 396, 270);
+
+  NSString *intro = @"MacKey là chương trình gõ Tiếng Việt mã nguồn mở hiện đại, nhanh, nhẹ và an toàn dành cho macOS.\n";
+  NSArray<NSArray<NSString *> *> *items = @[
+    @[@"Tương thích tối ưu: ", @"Tối ưu cho chip Apple Silicon và Intel, hoạt động mượt mà từ macOS 10.15 đến macOS 15+ Sequoia."],
+    @[@"Viết hoa thông minh: ", @"Tự động viết hoa chữ đầu câu sau dấu kết thúc câu (., ?, !) và sau phím Enter."],
+    @[@"Gõ tắt và Gợi ý nổi: ", @"Hiển thị popup gợi ý từ hoàn chỉnh khi gõ tắt, viết hoa thông minh theo ngữ cảnh câu."],
+    @[@"Quản lý gõ tắt chuyên nghiệp: ", @"Hỗ trợ nhập và xuất dữ liệu từ tệp Excel (.xlsx) hoặc CSV chuẩn Unicode (NFC)."],
+    @[@"Công cụ chuyển mã đa năng: ", @"Chuyển đổi mã Clipboard nhanh chóng, đổi chữ HOA/thường, loại bỏ dấu tiếng Việt."],
+    @[@"Đa dạng kiểu gõ và bảng mã: ", @"Hỗ trợ Telex, VNI, Simple Telex, chính tả hiện đại (oà, uý), TCVN3, VNI Windows..."]
+  ];
+
+  NSMutableParagraphStyle *introStyle = [[NSMutableParagraphStyle alloc] init];
+  introStyle.alignment = NSTextAlignmentLeft;
+  introStyle.paragraphSpacing = 6.0;
+  introStyle.lineSpacing = 1.0;
+
+  CGFloat bulletIndent = 22.0;
+  NSMutableParagraphStyle *bulletStyle = [[NSMutableParagraphStyle alloc] init];
+  bulletStyle.alignment = NSTextAlignmentLeft;
+  bulletStyle.firstLineHeadIndent = 0.0;
+  bulletStyle.headIndent = bulletIndent;
+  bulletStyle.paragraphSpacing = 3.5;
+  bulletStyle.lineSpacing = 1.0;
+  NSTextTab *tabStop = [[NSTextTab alloc] initWithTextAlignment:NSTextAlignmentLeft location:bulletIndent options:@{}];
+  bulletStyle.tabStops = @[tabStop];
+
+  NSFont *fontReg = [NSFont systemFontOfSize:12.0 weight:NSFontWeightRegular];
+  NSFont *fontMed = [NSFont systemFontOfSize:12.0 weight:NSFontWeightMedium];
+  NSFont *fontDot = [NSFont systemFontOfSize:13.0 weight:NSFontWeightBold];
+
+  NSColor *bulletColor;
+  if (@available(macOS 10.15, *)) {
+    bulletColor = [NSColor colorWithName:nil dynamicProvider:^NSColor * _Nonnull(NSAppearance * _Nonnull appearance) {
+      NSAppearanceName best = [appearance bestMatchFromAppearancesWithNames:@[NSAppearanceNameAqua, NSAppearanceNameDarkAqua]];
+      if ([best isEqualToString:NSAppearanceNameDarkAqua]) {
+        return [NSColor colorWithCalibratedRed:0.28 green:0.78 blue:0.62 alpha:1.0];
+      }
+      return [NSColor colorWithCalibratedRed:0.10 green:0.48 blue:0.38 alpha:1.0];
+    }];
+  } else {
+    bulletColor = [NSColor colorWithCalibratedRed:0.10 green:0.48 blue:0.38 alpha:1.0];
+  }
+
+  NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] init];
+
+  // Intro
+  [attrStr appendAttributedString:[[NSAttributedString alloc] initWithString:intro attributes:@{
+    NSFontAttributeName: fontReg,
+    NSParagraphStyleAttributeName: introStyle,
+    NSForegroundColorAttributeName: [NSColor labelColor]
+  }]];
+
+  // Bullets
+  for (NSUInteger i = 0; i < items.count; i++) {
+    NSString *title = items[i][0];
+    NSString *desc = items[i][1];
+
+    // Bullet dot separated in front with tab
+    NSAttributedString *bulletLead = [[NSAttributedString alloc] initWithString:@"•\t" attributes:@{
+      NSFontAttributeName: fontDot,
+      NSParagraphStyleAttributeName: bulletStyle,
+      NSForegroundColorAttributeName: bulletColor
+    }];
+    [attrStr appendAttributedString:bulletLead];
+
+    // Title (Medium weight)
+    NSAttributedString *titleAttr = [[NSAttributedString alloc] initWithString:title attributes:@{
+      NSFontAttributeName: fontMed,
+      NSParagraphStyleAttributeName: bulletStyle,
+      NSForegroundColorAttributeName: [NSColor labelColor]
+    }];
+    [attrStr appendAttributedString:titleAttr];
+
+    // Description text
+    NSString *ending = (i < items.count - 1) ? @"\n" : @"";
+    NSAttributedString *descAttr = [[NSAttributedString alloc] initWithString:[desc stringByAppendingString:ending] attributes:@{
+      NSFontAttributeName: fontReg,
+      NSParagraphStyleAttributeName: bulletStyle,
+      NSForegroundColorAttributeName: [NSColor labelColor]
+    }];
+    [attrStr appendAttributedString:descAttr];
+  }
+
+  self.aboutDescription.attributedStringValue = attrStr;
 }
 
 @end

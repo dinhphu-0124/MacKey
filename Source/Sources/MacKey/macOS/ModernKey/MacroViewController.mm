@@ -380,13 +380,6 @@ static NSImage* GetWarningSquircleIcon(void) {
     self.macroName.delegate = self;
     self.macroContent.delegate = self;
     
-    self.AutoCapsMacro.state = vAutoCapsMacro ? NSControlStateValueOn : NSControlStateValueOff;
-    [self.AutoCapsMacro sizeToFit];
-    NSRect capFrame = self.AutoCapsMacro.frame;
-    capFrame.origin.x = 252;
-    capFrame.origin.y = 17;
-    self.AutoCapsMacro.frame = capFrame;
-    
     // Configure table column resizing
     self.tableView.columnAutoresizingStyle = NSTableViewLastColumnOnlyAutoresizingStyle;
     if (self.tableView.tableColumns.count >= 2) {
@@ -449,8 +442,9 @@ static NSImage* GetWarningSquircleIcon(void) {
 }
 
 - (void)setupCountBadge {
+    // Count badge: icon + "N từ tắt" — placed after "Xuất File..." button
     self.countContainerView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 120, 20)];
-    self.countContainerView.autoresizingMask = NSViewMinXMargin | NSViewMaxYMargin;
+    self.countContainerView.autoresizingMask = NSViewMaxXMargin | NSViewMaxYMargin;
     
     self.countIconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 2, 16, 16)];
     self.countIconView.imageScaling = NSImageScaleProportionallyUpOrDown;
@@ -464,22 +458,24 @@ static NSImage* GetWarningSquircleIcon(void) {
     self.countLabel.textColor = [NSColor secondaryLabelColor];
     self.countLabel.lineBreakMode = NSLineBreakByClipping;
     
-    self.deleteAllButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 16, 16)];
+    [self.countContainerView addSubview:self.countIconView];
+    [self.countContainerView addSubview:self.countLabel];
+    [self.view addSubview:self.countContainerView];
+    
+    // Trash button — bottom-right corner, red tint
+    self.deleteAllButton = [[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 20, 20)];
     self.deleteAllButton.bordered = NO;
     self.deleteAllButton.imagePosition = NSImageOnly;
     self.deleteAllButton.image = [MacroViewController trashCanBarIcon];
     self.deleteAllButton.imageScaling = NSImageScaleProportionallyUpOrDown;
+    self.deleteAllButton.autoresizingMask = NSViewMinXMargin | NSViewMaxYMargin;
     if (@available(macOS 10.14, *)) {
-        [self.deleteAllButton setContentTintColor:[NSColor secondaryLabelColor]];
+        [self.deleteAllButton setContentTintColor:[NSColor systemRedColor]];
     }
     self.deleteAllButton.toolTip = @"Xoá tất cả dữ liệu gõ tắt hiện tại đang có";
     self.deleteAllButton.target = self;
     self.deleteAllButton.action = @selector(onDeleteAllMacros:);
-    
-    [self.countContainerView addSubview:self.countIconView];
-    [self.countContainerView addSubview:self.countLabel];
-    [self.countContainerView addSubview:self.deleteAllButton];
-    [self.view addSubview:self.countContainerView];
+    [self.view addSubview:self.deleteAllButton];
 }
 
 - (void)updateMacroCountLayout {
@@ -488,18 +484,21 @@ static NSImage* GetWarningSquircleIcon(void) {
     CGFloat labelW = self.countLabel.frame.size.width;
     CGFloat iconW = 16;
     CGFloat gap1 = 5;
-    CGFloat gap2 = 8;
-    CGFloat trashW = 16;
-    CGFloat totalW = iconW + gap1 + labelW + gap2 + trashW;
-    CGFloat rightMargin = 20;
-    CGFloat parentW = self.view.bounds.size.width;
-    CGFloat originX = parentW - rightMargin - totalW;
+    CGFloat totalW = iconW + gap1 + labelW;
+    // Place right after "Xuất File..." button (ends at x=244) with 12px gap
+    CGFloat originX = 256;
     CGFloat originY = 16;
     
     self.countContainerView.frame = NSMakeRect(originX, originY, totalW, 20);
     self.countIconView.frame = NSMakeRect(0, 2, iconW, iconW);
     self.countLabel.frame = NSMakeRect(iconW + gap1, 1, labelW, 18);
-    self.deleteAllButton.frame = NSMakeRect(iconW + gap1 + labelW + gap2, 2, trashW, trashW);
+    
+    // Trash button: bottom-right corner
+    CGFloat trashW = 20;
+    CGFloat trashH = 20;
+    CGFloat rightMargin = 16;
+    CGFloat parentW = self.view.bounds.size.width;
+    self.deleteAllButton.frame = NSMakeRect(parentW - rightMargin - trashW, originY, trashW, trashH);
 }
 
 - (void)updateMacroCount {
@@ -1153,14 +1152,6 @@ static NSImage* GetWarningSquircleIcon(void) {
     if (textField == self.macroName) {
         [self updateButtonStates];
     }
-}
-
-- (IBAction)onAutoCapButton:(NSButton *)sender {
-    NSInteger val = sender.state == NSControlStateValueOn ? 1 : 0;
-    MacKeyStateLock();
-    vAutoCapsMacro = (int)val;
-    MacKeyStateUnlock();
-    [[NSUserDefaults standardUserDefaults] setInteger:vAutoCapsMacro forKey:@"vAutoCapsMacro"];
 }
 
 #pragma mark TableView

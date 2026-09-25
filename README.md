@@ -1,18 +1,18 @@
-# MacKey (v1.0.2) — Bộ gõ Tiếng Việt Hiện Đại cho macOS
+# MacKey (v1.0.4) — Bộ gõ Tiếng Việt Hiện Đại cho macOS
 
 <p align="center">
   <img src="assets/tab_thongtin.png" width="620" alt="MacKey Banner" />
 </p>
 
 <p align="center">
-  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.2-2ea44f.svg?style=for-the-badge&logo=github" alt="Release" /></a>
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.4-2ea44f.svg?style=for-the-badge&logo=github" alt="Release" /></a>
   <a href="https://github.com/dinhphu-0124/MacKey/releases"><img src="https://img.shields.io/github/downloads/dinhphu-0124/MacKey/total.svg?style=for-the-badge&logo=github&color=007ec6" alt="Tổng lượt tải xuống" /></a>
   <a href="#"><img src="https://img.shields.io/badge/macOS-10.15%2B%20%7C%20Apple%20Silicon%20%26%20Intel-000000.svg?style=for-the-badge&logo=apple" alt="macOS Support" /></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-007ec6.svg?style=for-the-badge" alt="License: GPL v3" /></a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.3.dmg">
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.4.dmg">
     <img src="https://img.shields.io/badge/⬇️_Tải_bản_cài_đặt_MacKey_ngay-.dmg_(Miễn_phí)-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Tải MacKey ngay" />
   </a>
   <br/>
@@ -119,6 +119,15 @@ Giao diện Bảng điều khiển được tổ chức khoa học thành 4 tab 
 * **Tương thích layout khác:** Hỗ trợ người dùng bàn phím bố cục **Dvorak**, **Colemak**...
 * **Kiểm tra phiên bản mới:** Tự động kiểm tra bản cập nhật lúc mở ứng dụng.
 
+#### Tab "Thông tin" — Giới thiệu phiên bản & Tính năng cốt lõi
+<p align="center">
+  <img src="assets/tab_thongtin.png" width="580" alt="Tab Thông tin" />
+</p>
+
+* **Thông tin phiên bản chi tiết:** Hiển thị rõ số phiên bản phát hành, mã bản dựng (build) và ngày cập nhật.
+* **Tổng hợp tính năng nổi bật:** Trình bày 6 tính năng cốt lõi bằng phong cách Typography thụt lề treo (Hanging Indent 22pt) với dấu chấm tròn xanh ngọc (Teal) sang trọng.
+* **Liên kết nhanh:** Mở mã nguồn GitHub hoặc liên hệ tác giả chỉ với 1 cú click chuột.
+
 ---
 
 ### 3. Quản lý gõ tắt chuyên nghiệp (Macro)
@@ -129,7 +138,11 @@ Cửa sổ "Thiết lập gõ tắt" được thiết kế tối ưu với khả
   <img src="assets/macro_manager.png" width="600" alt="Cửa sổ Thiết lập gõ tắt" />
 </p>
 
-* **Bố cục co giãn thông minh (Responsive):** Khi phóng to cửa sổ, cột "Nội dung đầy đủ" tự động mở rộng bao phủ toàn bộ bảng, các nút chức năng neo chuẩn góc trên bên phải.
+* **Bố cục co giãn thông minh (Responsive) & Chân trang tối ưu:**
+  - Nút **"Nhập từ Excel..."** và **"Xuất File..."** căn gọn gàng phía góc trái.
+  - Huy hiệu số lượng từ tắt `[📖] [75 từ tắt]` được đặt ở giữa, ngay liền sau nút Xuất File.
+  - Icon Thùng rác 🗑️ màu đỏ cảnh báo sắc nét được bố trí ở góc dưới cùng bên phải, bấm vào sẽ hiển thị hộp thoại xác nhận xoá sạch an toàn.
+  - Tuỳ chọn "Tự động viết hoa theo phím tắt" được chuyển sang quản lý tập trung tại Tab Gõ tắt của Bảng điều khiển với tooltip hiển thị ví dụ chi tiết (`ko` ➔ `không`, `Ko` ➔ `Không`, `KO` ➔ `KHÔNG`).
 * **Thao tác thêm mới thông minh:** Khi bạn nhấp chọn 1 từ có sẵn trong danh sách, nút **"Thêm mới"** sẽ xuất hiện ngay trên đầu nút **"Xoá"**. Bấm "Thêm mới" sẽ tự động xoá sạch 2 ô nhập liệu để sẵn sàng nhập từ mới.
 
 <p align="center">
@@ -137,8 +150,7 @@ Cửa sổ "Thiết lập gõ tắt" được thiết kế tối ưu với khả
 </p>
 
 * **Huy hiệu số lượng & Xoá tất cả an toàn:**
-  - Góc phải dưới cùng hiển thị huy hiệu số lượng: `[📖] [76 từ tắt]`.
-  - Icon thùng rác kế bên cho phép xoá tất cả dữ liệu gõ tắt hiện có với hộp thoại xác nhận chuyên nghiệp, icon và tiêu đề căn giữa:
+  - Chân trang hiển thị số lượng từ tắt hiện có và nút thùng rác xoá an toàn với hộp thoại xác nhận chuyên nghiệp, icon và tiêu đề căn giữa:
 
 <p align="center">
   <img src="assets/macro_delete_confirmation.png" width="340" alt="Hộp thoại xác nhận xoá toàn bộ" />
@@ -152,7 +164,7 @@ Cửa sổ "Thiết lập gõ tắt" được thiết kế tối ưu với khả
   <img src="assets/macro_export.png" width="340" alt="Hộp thoại Xuất file Excel/CSV" />
 </p>
 
-* **Gợi ý từ gõ tắt nổi & Viết hoa thông minh theo ngữ cảnh (Mới trong v1.0.3):**
+* **Gợi ý từ gõ tắt nổi & Viết hoa thông minh theo ngữ cảnh:**
   - **Bong bóng gợi ý tức thì:** Khi gõ một từ tắt (ví dụ `cty`, `sn`, `stkbidv`, `hp`...), một bong bóng gợi ý nhỏ gọn, bo góc mềm mại sẽ tự động hiển thị ngay phía trên con trỏ soạn thảo:
 
 <p align="center">
@@ -233,7 +245,7 @@ Mở từ Menu bar → **Giới thiệu**:
 
 ### Bước 1: Tải về và cài đặt từ file DMG
 
-1. Truy cập [Trang Releases của MacKey](https://github.com/dinhphu-0124/MacKey/releases/latest) và tải file **`MacKey-1.0.3.dmg`**.
+1. Truy cập [Trang Releases của MacKey](https://github.com/dinhphu-0124/MacKey/releases/latest) và tải file **`MacKey-1.0.4.dmg`**.
 2. Nhấp đúp chuột (double-click) vào file `.dmg` vừa tải về để mở cửa sổ cài đặt.
 3. **Kéo biểu tượng MacKey** ở bên trái và **thả vào thư mục Applications** ở bên phải:
 

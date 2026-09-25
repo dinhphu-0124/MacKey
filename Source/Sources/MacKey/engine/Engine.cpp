@@ -135,6 +135,17 @@ void* vKeyInit() {
     _isStartOfSentence = true;
     _sentenceBreakPending = false;
     _macroSuggestionDismissed = false;
+    _hasHandledMacro = false;
+    _hasHandleQuickConsonant = false;
+    tempDisableKey = false;
+    _spaceCount = 0;
+    _specialChar.clear();
+    hCode = vDoNothing;
+    hBPC = 0;
+    hNCC = 0;
+    hExt = 0;
+    hMacroKey.clear();
+    hMacroData.clear();
     return &HookState;
 }
 
@@ -454,6 +465,7 @@ void startNewSession() {
     _index = 0;
     hBPC = 0;
     hNCC = 0;
+    hCode = vDoNothing;
     tempDisableKey = false;
     _stateIndex = 0;
     _hasHandledMacro = false;
@@ -1287,6 +1299,9 @@ void vEnglishMode(const vKeyEventState& state, const Uint16& data, const bool& i
         _isStartOfSentence = true;
         _sentenceBreakPending = false;
     } else if (data == KEY_SPACE) {
+        hCode = vDoNothing;
+        hBPC = 0;
+        hNCC = 0;
         if (_macroSuggestionDismissed) {
             _macroSuggestionDismissed = false;
         } else if (!_hasHandledMacro && findMacroWithContext(hMacroKey, hMacroData, _isStartOfSentence)) {
@@ -1351,6 +1366,7 @@ void vKeyHandleEvent(const vKeyEvent& event,
         hExt = 1; //word break
         
         //check macro feature
+        bool handledMacroInBreak = false;
         if (vUseMacro && isMacroBreakCode(data) && !_hasHandledMacro) {
             if (_macroSuggestionDismissed) {
                 _macroSuggestionDismissed = false;
@@ -1358,15 +1374,21 @@ void vKeyHandleEvent(const vKeyEvent& event,
                 hCode = vReplaceMaro;
                 hBPC = (Byte)hMacroKey.size();
                 _hasHandledMacro = true;
+                handledMacroInBreak = true;
             }
-        } else if ((vQuickStartConsonant || vQuickEndConsonant) && !tempDisableKey && isMacroBreakCode(data)) {
-            checkQuickConsonant();
-        } else if (vRestoreIfWrongSpelling && isWordBreak(event, state, data)) { //restore key if wrong spelling with break-key
-            if (!tempDisableKey && vCheckSpelling) {
-                checkSpelling(true); //force check spelling
-            }
-            if (tempDisableKey && !checkRestoreIfWrongSpelling(vRestoreAndStartNewSession)) {
-                hCode = vDoNothing;
+        }
+        if (!handledMacroInBreak) {
+            if ((vQuickStartConsonant || vQuickEndConsonant) && !tempDisableKey && isMacroBreakCode(data)) {
+                checkQuickConsonant();
+            } else if (vRestoreIfWrongSpelling && isWordBreak(event, state, data)) { //restore key if wrong spelling with break-key
+                if (!tempDisableKey && vCheckSpelling) {
+                    checkSpelling(true); //force check spelling
+                }
+                if (tempDisableKey && !checkRestoreIfWrongSpelling(vRestoreAndStartNewSession)) {
+                    hCode = vDoNothing;
+                    hBPC = 0;
+                    hNCC = 0;
+                }
             }
         }
         
@@ -1440,6 +1462,7 @@ void vKeyHandleEvent(const vKeyEvent& event,
         if (!tempDisableKey && vCheckSpelling) {
             checkSpelling(true); //force check spelling
         }
+        bool handledMacroInSpace = false;
         if (vUseMacro && !_hasHandledMacro) {
             if (_macroSuggestionDismissed) {
                 _macroSuggestionDismissed = false;
@@ -1448,17 +1471,25 @@ void vKeyHandleEvent(const vKeyEvent& event,
                 hBPC = (Byte)hMacroKey.size();
                 _spaceCount++;
                 _hasHandledMacro = true;
+                handledMacroInSpace = true;
             }
-        } else if ((vQuickStartConsonant || vQuickEndConsonant) && !tempDisableKey && checkQuickConsonant()) {
-            _spaceCount++;
-        } else if (vRestoreIfWrongSpelling && tempDisableKey && !_hasHandledMacro) { //restore key if wrong spelling
-            if (!checkRestoreIfWrongSpelling(vRestore)) {
+        }
+        if (!handledMacroInSpace) {
+            if ((vQuickStartConsonant || vQuickEndConsonant) && !tempDisableKey && checkQuickConsonant()) {
+                _spaceCount++;
+            } else if (vRestoreIfWrongSpelling && tempDisableKey && !_hasHandledMacro) { //restore key if wrong spelling
+                if (!checkRestoreIfWrongSpelling(vRestore)) {
+                    hCode = vDoNothing;
+                    hBPC = 0;
+                    hNCC = 0;
+                }
+                _spaceCount++;
+            } else { //do nothing with SPACE KEY
                 hCode = vDoNothing;
+                hBPC = 0;
+                hNCC = 0;
+                _spaceCount++;
             }
-            _spaceCount++;
-        } else { //do nothing with SPACE KEY
-            hCode = vDoNothing;
-            _spaceCount++;
         }
         if (vUseMacro) {
             hMacroKey.clear();

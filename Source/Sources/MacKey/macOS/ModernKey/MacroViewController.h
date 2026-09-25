@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet NSButton *buttonAdd;
 @property (weak) IBOutlet NSButton *buttonDelete;
 @property (strong, nonatomic) NSButton *buttonAddNew;
-@property (weak) IBOutlet NSButton *AutoCapsMacro;
 
 - (IBAction)onAddNewMacro:(id)sender;
 - (IBAction)onDeleteAllMacros:(id)sender;

@@ -12,12 +12,8 @@ using namespace std;
 map<vector<Uint32>, MacroData> macroMap;
 
 extern int vCodeTable;
-//local variable
-static int c = 0;
 static bool _macroFlag = false;
 static Uint16 _kChar = 0;
-static Uint32 _charBuff;
-static int _kMacro;
 
 static void convert(const string& str, vector<Uint32>& outData) {
     outData.clear();
@@ -132,22 +128,22 @@ void getMacroSaveData(vector<Byte>& outData) {
 }
 
 static bool modifyCaseUnicode(Uint32& code, const bool& isUpperCase=true) {
-    _charBuff = code;
+    Uint32 origCode = code;
     if (!(code & CHAR_CODE_MASK)) { //for normal char
         code &= isUpperCase ? CAPS_MASK :  ~CAPS_MASK;
-        return code != _charBuff;
+        return code != origCode;
     }
     
     //for unicode character
     for (map<Uint32, vector<Uint16>>::iterator it = _codeTable[vCodeTable].begin(); it != _codeTable[vCodeTable].end(); ++it) {
-        for (_kMacro = 0; _kMacro < it->second.size(); _kMacro++) {
-            if ((Uint16)code == it->second[_kMacro]) {
-                if (_kMacro % 2 == 0 && !isUpperCase)
-                    _kMacro++;
-                else if (_kMacro % 2 != 0 && isUpperCase)
-                    _kMacro--;
-                code = _codeTable[vCodeTable][it->first][_kMacro] | CHAR_CODE_MASK;
-                return code != _charBuff;;
+        for (size_t k = 0; k < it->second.size(); k++) {
+            if ((Uint16)code == it->second[k]) {
+                if (k % 2 == 0 && !isUpperCase)
+                    k++;
+                else if (k % 2 != 0 && isUpperCase)
+                    k--;
+                code = _codeTable[vCodeTable][it->first][k] | CHAR_CODE_MASK;
+                return code != origCode;
             }//end if
         }
     }
@@ -215,8 +211,8 @@ static string adjustFirstCharacterCase(const string& str, bool isUpperCase) {
 }
 
 bool findMacroWithContext(vector<Uint32>& key, vector<Uint32>& macroContentCode, bool isStartOfSentence) {
-    for (c = 0; c < key.size(); c++) {
-        key[c] = getCharacterCode(key[c]);
+    for (size_t idx = 0; idx < key.size(); idx++) {
+        key[idx] = getCharacterCode(key[idx]);
     }
     
     bool isKeyHasUpperCase = false;
@@ -244,8 +240,8 @@ bool findMacroWithContext(vector<Uint32>& key, vector<Uint32>& macroContentCode,
         vector<Uint32> lowerKey = key;
         if (lowerKey.size() > 1 && modifyCaseUnicode(lowerKey[1], false)) {
             _macroFlag = true;
-            for (c = 2; c < lowerKey.size(); c++) {
-                modifyCaseUnicode(lowerKey[c], false);
+            for (size_t idx = 2; idx < lowerKey.size(); idx++) {
+                modifyCaseUnicode(lowerKey[idx], false);
             }
         }
         
@@ -254,9 +250,9 @@ bool findMacroWithContext(vector<Uint32>& key, vector<Uint32>& macroContentCode,
                 macroContentCode.clear();
                 MacroData data = macroMap[lowerKey];
                 macroContentCode = data.macroContentCode;
-                for (c = 0; c < macroContentCode.size(); c++) {
-                    if (c == 0 || _macroFlag) {
-                        setCharacterCodeCase(macroContentCode[c], true);
+                for (size_t idx = 0; idx < macroContentCode.size(); idx++) {
+                    if (idx == 0 || _macroFlag) {
+                        setCharacterCodeCase(macroContentCode[idx], true);
                     }
                 }
                 return true;

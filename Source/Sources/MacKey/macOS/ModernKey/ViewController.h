@@ -53,6 +53,7 @@
 
 @property (weak) IBOutlet NSButton *CheckNewVersionButton;
 @property (weak) IBOutlet NSTextField *VersionInfo;
+@property (weak) IBOutlet NSTextField *aboutDescription;
 
 @property (weak) IBOutlet NSImageView *cursorImage;
 
