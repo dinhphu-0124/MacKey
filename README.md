@@ -6,6 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/dinhphu-0124/MacKey/releases/latest"><img src="https://img.shields.io/badge/Release-v1.0.2-2ea44f.svg?style=for-the-badge&logo=github" alt="Release" /></a>
+  <a href="https://github.com/dinhphu-0124/MacKey/releases"><img src="https://img.shields.io/github/downloads/dinhphu-0124/MacKey/total.svg?style=for-the-badge&logo=github&color=007ec6" alt="Tổng lượt tải xuống" /></a>
   <a href="#"><img src="https://img.shields.io/badge/macOS-10.15%2B%20%7C%20Apple%20Silicon%20%26%20Intel-000000.svg?style=for-the-badge&logo=apple" alt="macOS Support" /></a>
   <a href="https://www.gnu.org/licenses/gpl-3.0"><img src="https://img.shields.io/badge/License-GPLv3-007ec6.svg?style=for-the-badge" alt="License: GPL v3" /></a>
 </p>
