@@ -160,12 +160,28 @@ Mở từ Menu bar → **Công cụ chuyển mã...**:
   <img src="assets/convert_tool.png" width="500" alt="Công cụ chuyển mã văn bản" />
 </p>
 
-* Chuyển mã văn bản có sẵn trong bộ nhớ tạm (Clipboard) giữa các bảng mã: Unicode, TCVN3 (ABC), VNI Windows, VIQR... (có nút `⇄` đảo ngược chiều nhanh).
-* Các tuỳ chọn nâng cao:
-  - Chuyển toàn bộ sang chữ HOA / chữ thường.
-  - Viết hoa đầu câu / Viết Hoa Chữ Cái Đầu Mỗi Từ.
-  - **Loại bỏ dấu tiếng Việt** (rất tiện để đổi tên file, đặt URL slug).
-* Hỗ trợ **phím tắt chuyển mã nhanh Clipboard** mà không cần mở cửa sổ.
+* **Chuyển mã Clipboard đa năng:** Chuyển đổi văn bản có sẵn trong bộ nhớ tạm (Clipboard) giữa các bảng mã tiếng Việt phổ biến: **Unicode**, **TCVN3 (ABC)**, **VNI Windows**, **VIQR**, **Unicode tổ hợp**... Nút **`⇄`** giúp đảo chiều bảng mã Nguồn và Đích nhanh chóng.
+  - *Ví dụ tài liệu cũ sang chuẩn mới:* `tiÕng viÖt` (TCVN3) ➔ `tiếng việt` (Unicode dựng sẵn).
+  - *Ví dụ phần mềm đồ hoạ cũ:* `Bảo mật` (Unicode) ➔ `baûo maät` (VNI Windows).
+
+* **Các tuỳ chọn định dạng văn bản nâng cao:**
+
+| Tuỳ chọn | Mô tả công dụng | Ví dụ trước | Ví dụ sau |
+| :--- | :--- | :--- | :--- |
+| **Chữ HOA** | Chuyển toàn bộ ký tự sang in hoa | `Việt Nam quê hương tôi.` | `VIỆT NAM QUÊ HƯƠNG TÔI.` |
+| **Chữ thường** | Chuyển toàn bộ ký tự sang in thường | `BỘ GÕ TIẾNG VIỆT MACKEY` | `bộ gõ tiếng việt mackey` |
+| **Viết hoa đầu câu** | Tự động viết hoa chữ cái đầu sau dấu chấm, chấm hỏi, chấm cảm (`.`, `?`, `!`) | `hôm nay trời đẹp. bạn khoẻ không? vâng, tôi khoẻ!` | `Hôm nay trời đẹp. Bạn khoẻ không? Vâng, tôi khoẻ!` |
+| **Viết Hoa Chữ Cái Đầu Mỗi Từ** | Viết hoa chữ cái đầu của từng từ (rất tiện căn chỉnh họ tên, tiêu đề) | `nguyễn đình phú - bộ gõ mackey` | `Nguyễn Đình Phú - Bộ Gõ Mackey` |
+| **Loại bỏ dấu tiếng Việt** | Bỏ dấu thanh, dấu mũ, dấu móc (rất tiện để đổi tên file, đặt URL slug, tên biến code) | `Việt Nam quê hương tôi!` | `viet nam que huong toi!` |
+
+* **Hỗ trợ kết hợp linh hoạt:** Bạn có thể tích chọn đồng thời nhiều tuỳ chọn, ví dụ:
+  - *Loại bỏ dấu* + *Chữ HOA*: `Phạm Văn Đồng` ➔ `PHAM VAN DONG`
+  - *Loại bỏ dấu* + *Viết hoa mỗi từ*: `nguyễn đình phú` ➔ `Nguyen Dinh Phu`
+
+* **Phím tắt chuyển mã nhanh Clipboard (Quick Convert Hotkey):**
+  - Không cần mất công mở giao diện ứng dụng.
+  - Chỉ cần **bôi đen văn bản** ➔ bấm `⌘ + C` (Copy) ➔ bấm **Tổ hợp phím tắt chuyển mã nhanh** đã thiết lập ➔ bấm `⌘ + V` (Paste) để dán ngay kết quả đã chuyển đổi.
+  - Tuỳ chọn **"Hiển thị thông báo khi chuyển mã xong"**: hiện hộp thoại thông báo trực quan hoặc chuyển ngầm êm ái.
 
 ---
 
