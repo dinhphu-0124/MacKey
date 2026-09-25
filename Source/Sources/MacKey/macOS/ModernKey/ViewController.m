@@ -17,6 +17,7 @@ extern int vQuickTelex;
 extern int vRestoreIfWrongSpelling;
 extern int vUseMacro;
 extern int vUseMacroInEnglishMode;
+extern int vSuggestMacro;
 extern int vUpperCaseFirstChar;
 extern int vTempOffSpelling;
 extern int vAllowConsonantZFWJ;
@@ -365,6 +366,13 @@ extern int vPerformLayoutCompat;
   MacKeyStateUnlock();
 }
 
+- (IBAction)onSuggestMacroChanged:(NSButton *)sender {
+  NSInteger val = [self setCustomValue:sender keyToSet:@"suggestMacro"];
+  MacKeyStateLock();
+  vSuggestMacro = (int)val;
+  MacKeyStateUnlock();
+}
+
 - (IBAction)onUpperCaseFirstChar:(NSButton *)sender {
   NSInteger val = [self setCustomValue:sender keyToSet:@"UpperCaseFirstChar"];
   MacKeyStateLock();
@@ -495,6 +503,13 @@ extern int vPerformLayoutCompat;
       integerForKey:@"UseMacroInEnglishMode"];
   self.UseMacroInEnglishMode.state =
       useMacroInEnglish ? NSControlStateValueOn : NSControlStateValueOff;
+
+  NSInteger suggestMacro = 1;
+  if ([[NSUserDefaults standardUserDefaults] objectForKey:@"suggestMacro"] != nil) {
+    suggestMacro = [[NSUserDefaults standardUserDefaults] integerForKey:@"suggestMacro"];
+  }
+  self.SuggestMacro.state =
+      suggestMacro ? NSControlStateValueOn : NSControlStateValueOff;
 
   NSInteger upperCaseFirstChar = [[NSUserDefaults standardUserDefaults]
       integerForKey:@"UpperCaseFirstChar"];

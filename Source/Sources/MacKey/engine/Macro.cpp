@@ -154,47 +154,179 @@ static bool modifyCaseUnicode(Uint32& code, const bool& isUpperCase=true) {
     return false;
 }
 
-bool findMacro(vector<Uint32>& key, vector<Uint32>& macroContentCode) {
+static wchar_t convertCharCaseUnicode(wchar_t ch, bool isUpperCase);
+
+static void setCharacterCodeCase(Uint32& code, bool isUpperCase) {
+    if (code & PURE_CHARACTER_MASK) {
+        wchar_t raw = (wchar_t)(code & ~PURE_CHARACTER_MASK);
+        wchar_t converted = convertCharCaseUnicode(raw, isUpperCase);
+        code = (Uint32)converted | PURE_CHARACTER_MASK;
+        return;
+    }
+    if (code & CHAR_CODE_MASK) {
+        modifyCaseUnicode(code, isUpperCase);
+        return;
+    }
+    Uint16 ch = keyCodeToCharacter(code);
+    if (ch != 0) {
+        Uint16 newCh = isUpperCase ? (Uint16)toupper(ch) : (Uint16)tolower(ch);
+        if (_characterMap.find(newCh) != _characterMap.end()) {
+            code = _characterMap[newCh];
+            return;
+        }
+    }
+    if (isUpperCase) {
+        code |= CAPS_MASK;
+    } else {
+        code &= ~CAPS_MASK;
+    }
+}
+
+static wchar_t convertCharCaseUnicode(wchar_t ch, bool isUpperCase) {
+    // 1. Basic ASCII
+    if (ch >= L'a' && ch <= L'z' && isUpperCase) {
+        return ch - 32;
+    }
+    if (ch >= L'A' && ch <= L'Z' && !isUpperCase) {
+        return ch + 32;
+    }
+    // 2. Look in _codeTable[0] (Unicode table)
+    for (map<Uint32, vector<Uint16>>::iterator it = _codeTable[0].begin(); it != _codeTable[0].end(); ++it) {
+        for (size_t i = 0; i < it->second.size(); i++) {
+            if ((Uint16)ch == it->second[i]) {
+                if (i % 2 == 0 && !isUpperCase) {
+                    if (i + 1 < it->second.size()) return (wchar_t)it->second[i + 1];
+                } else if (i % 2 != 0 && isUpperCase) {
+                    if (i > 0) return (wchar_t)it->second[i - 1];
+                }
+                return ch;
+            }
+        }
+    }
+    return ch;
+}
+
+static string adjustFirstCharacterCase(const string& str, bool isUpperCase) {
+    if (str.empty()) return str;
+    wstring wstr = utf8ToWideString(str);
+    if (wstr.empty()) return str;
+    wstr[0] = convertCharCaseUnicode(wstr[0], isUpperCase);
+    return wideStringToUtf8(wstr);
+}
+
+bool findMacroWithContext(vector<Uint32>& key, vector<Uint32>& macroContentCode, bool isStartOfSentence) {
     for (c = 0; c < key.size(); c++) {
         key[c] = getCharacterCode(key[c]);
     }
+    
+    bool isKeyHasUpperCase = false;
+    for (size_t i = 0; i < key.size(); i++) {
+        if (key[i] & CAPS_MASK) {
+            isKeyHasUpperCase = true;
+            break;
+        }
+    }
+    
+    // 1. Direct match in macroMap
     if (macroMap.find(key) != macroMap.end()) {
         macroContentCode.clear();
         MacroData data = macroMap[key];
         macroContentCode = data.macroContentCode;
+        if (!isKeyHasUpperCase && !macroContentCode.empty()) {
+            setCharacterCodeCase(macroContentCode[0], isStartOfSentence);
+        }
         return true;
     }
-    if (vAutoCapsMacro) {
+    
+    // 2. Auto caps handling if user typed Shift / Caps
+    if (vAutoCapsMacro && isKeyHasUpperCase) {
         _macroFlag = false;
-        if (key.size() > 1 && modifyCaseUnicode(key[1], false)) {
+        vector<Uint32> lowerKey = key;
+        if (lowerKey.size() > 1 && modifyCaseUnicode(lowerKey[1], false)) {
             _macroFlag = true;
-            for (c = 2; c < key.size(); c++) {
-                modifyCaseUnicode(key[c], false);
+            for (c = 2; c < lowerKey.size(); c++) {
+                modifyCaseUnicode(lowerKey[c], false);
             }
         }
         
-        if (key.size() > 0 && modifyCaseUnicode(key[0], false)) {
-            if (macroMap.find(key) != macroMap.end()) {
+        if (lowerKey.size() > 0 && modifyCaseUnicode(lowerKey[0], false)) {
+            if (macroMap.find(lowerKey) != macroMap.end()) {
                 macroContentCode.clear();
-                MacroData data = macroMap[key];
+                MacroData data = macroMap[lowerKey];
                 macroContentCode = data.macroContentCode;
                 for (c = 0; c < macroContentCode.size(); c++) {
                     if (c == 0 || _macroFlag) {
-                        _kChar = keyCodeToCharacter(macroContentCode[c]);
-                        if (_kChar != 0) {
-                            _kChar = toupper(_kChar);
-                            macroContentCode[c] = _characterMap[_kChar];
-                            continue;
-                        }
-                        if (macroContentCode[c] & CHAR_CODE_MASK) {
-                            modifyCaseUnicode(macroContentCode[c]);
-                        }
+                        setCharacterCodeCase(macroContentCode[c], true);
                     }
                 }
                 return true;
             }
         }
     }
+    return false;
+}
+
+bool findMacro(vector<Uint32>& key, vector<Uint32>& macroContentCode) {
+    return findMacroWithContext(key, macroContentCode, true);
+}
+
+bool peekMacroWithContext(const vector<Uint32>& rawKey, string& outMacroText, string& outMacroContent, bool isStartOfSentence) {
+    if (rawKey.empty()) return false;
+    vector<Uint32> key = rawKey;
+    for (size_t i = 0; i < key.size(); i++) {
+        key[i] = getCharacterCode(key[i]);
+    }
+    
+    bool isKeyHasUpperCase = false;
+    for (size_t i = 0; i < key.size(); i++) {
+        if (key[i] & CAPS_MASK) {
+            isKeyHasUpperCase = true;
+            break;
+        }
+    }
+    
+    // Direct match
+    map<vector<Uint32>, MacroData>::iterator it = macroMap.find(key);
+    if (it != macroMap.end()) {
+        outMacroText = it->second.macroText;
+        string content = it->second.macroContent;
+        if (!isKeyHasUpperCase) {
+            content = adjustFirstCharacterCase(content, isStartOfSentence);
+        }
+        outMacroContent = content;
+        return true;
+    }
+    
+    // Auto caps match
+    if (vAutoCapsMacro && isKeyHasUpperCase) {
+        vector<Uint32> lowerKey = key;
+        bool allCaps = false;
+        if (lowerKey.size() > 1 && modifyCaseUnicode(lowerKey[1], false)) {
+            allCaps = true;
+            for (size_t i = 2; i < lowerKey.size(); i++) {
+                modifyCaseUnicode(lowerKey[i], false);
+            }
+        }
+        if (lowerKey.size() > 0 && modifyCaseUnicode(lowerKey[0], false)) {
+            it = macroMap.find(lowerKey);
+            if (it != macroMap.end()) {
+                outMacroText = it->second.macroText;
+                string content = it->second.macroContent;
+                if (allCaps) {
+                    wstring wstr = utf8ToWideString(content);
+                    for (size_t i = 0; i < wstr.size(); i++) {
+                        wstr[i] = convertCharCaseUnicode(wstr[i], true);
+                    }
+                    content = wideStringToUtf8(wstr);
+                } else {
+                    content = adjustFirstCharacterCase(content, true);
+                }
+                outMacroContent = content;
+                return true;
+            }
+        }
+    }
+    
     return false;
 }
 

@@ -919,6 +919,22 @@ DQ
                                                             <action selector="onAutoCapsMacro:" target="XfG-lQ-9wD" id="L9U-5b-4K2"/>
                                                         </connections>
                                                     </switch>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-suggestmacro">
+                                                        <rect key="frame" x="14" y="201" width="340" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Hiển thị gợi ý khi gõ từ tắt" id="lbl-suggestmacro-c">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <switch toolTip="Hiển thị bong bóng nổi gợi ý từ hoàn chỉnh khi gõ từ tắt (nhấn Space để hoàn tất)" verticalHuggingPriority="750" fixedFrame="YES" controlSize="small" translatesAutoresizingMaskIntoConstraints="NO" id="sw-suggestmacro">
+                                                        <rect key="frame" x="376" y="201" width="38" height="18"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                        <connections>
+                                                            <action selector="onSuggestMacroChanged:" target="XfG-lQ-9wD" id="act-suggestmacro"/>
+                                                        </connections>
+                                                    </switch>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-quicktelex">
                                                         <rect key="frame" x="14" y="174" width="340" height="18"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1343,6 +1359,7 @@ DQ
                         <outlet property="UseGrayIcon" destination="HEa-Qp-9qT" id="ApG-gR-H4l"/>
                         <outlet property="UseMacro" destination="eCY-Z0-cgW" id="0z8-vh-VlK"/>
                         <outlet property="UseMacroInEnglishMode" destination="0oj-fd-y0l" id="rD2-9a-ehn"/>
+                        <outlet property="SuggestMacro" destination="sw-suggestmacro" id="out-suggestmacro"/>
                         <outlet property="UseModernOrthography" destination="r8q-NU-lqe" id="lmX-Q6-FBh"/>
                         <outlet property="VersionInfo" destination="bXh-ai-gk3" id="jxu-Bo-Ajq"/>
                         <outlet property="VietButton" destination="qjz-9i-VOQ" id="Jpa-0e-ZDo"/>

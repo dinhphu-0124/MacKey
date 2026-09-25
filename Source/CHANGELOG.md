@@ -1,5 +1,17 @@
 # Change Log
 
+##### Version 1.0.3: (2026)
+- **Gợi ý từ gõ tắt nổi (Inline Macro Suggestion Tooltip/Popover):**
+  - Tự động hiển thị bong bóng popover bo góc mềm mại ngay trên con trỏ soạn thảo văn bản khi đang gõ từ tắt (ví dụ: `cty`, `sn`, `stkbidv`, `hthong`...).
+  - Nhấn phím **Space**: Tự động chuyển từ gõ tắt thành từ hoàn chỉnh và ẩn bong bóng gợi ý tức thì.
+  - Hỗ trợ phím **Escape (Esc)** hoặc click nút **✕** trên bong bóng: Bỏ qua gợi ý và huỷ chuyển đổi gõ tắt cho từ đó (nhấn Space sau đó chỉ thêm khoảng trắng bình thường).
+- **Quy tắc viết hoa thông minh theo ngữ cảnh câu:**
+  - **Đầu câu:** Tự động viết hoa chữ cái đầu tiên của từ hoàn chỉnh khi từ gõ tắt đứng ở đầu câu, đầu tin nhắn hoặc đứng sau các dấu kết thúc câu (`.`, `!`, `?` kèm Space/Enter). Ví dụ: `cty không ổn lắm` ➔ `Công ty không ổn lắm`, `tôi khỏe! bt` ➔ `tôi khỏe! Bình thường`.
+  - **Giữa câu:** Tự động chuyển chữ cái đầu tiên thành chữ thường khi từ gõ tắt đứng ở giữa câu hoặc sau dấu phẩy (kể cả khi từ tắt được lưu trong từ điển bằng chữ hoa). Ví dụ: `hp` lưu là `Hạnh phúc`, khi gõ `Hôm nay, tôi hp` ➔ `Hôm nay, tôi hạnh phúc`.
+  - **Tôn trọng phím Shift:** Khi người dùng chủ động gõ phím viết hoa bằng Shift (ví dụ `Hp` hoặc `HP`), ứng dụng giữ nguyên cách viết hoa theo đúng ý định.
+- **Tuỳ chọn trong Bảng điều khiển:**
+  - Bổ sung công tắc `[✔] Hiển thị gợi ý khi gõ từ tắt` trong tab "Gõ tắt", cho phép bật/tắt tính năng gợi ý linh hoạt theo sở thích cá nhân.
+
 ##### Version 1.0.2: (2026)
 - **Tùy biến phím chuyển chế độ (Shortcut Key):**
   - Cải tiến ô nhập phím chuyển chế độ nhận diện phím vật lý độc lập với bộ gõ tiếng Việt, cho phép chọn bất kỳ phím ký tự/số/phím Space nào kết hợp cùng các phím bổ trợ (`⌥`, `⌃`, `⌘`, `⇧`).

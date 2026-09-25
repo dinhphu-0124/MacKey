@@ -230,4 +230,9 @@ void vTempOffEngine(const bool& off=true);
 wstring utf8ToWideString(const string& str);
 string wideStringToUtf8(const wstring& str);
 
+extern int vSuggestMacro;
+bool vCheckMacroSuggestion(string& outShortcut, string& outContent);
+void vDismissMacroSuggestion();
+bool vIsMacroSuggestionDismissed();
+
 #endif /* Engine_h */

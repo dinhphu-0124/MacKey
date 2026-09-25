@@ -40,6 +40,7 @@
 
 @property (weak) IBOutlet NSButton *UseMacro;
 @property (weak) IBOutlet NSButton *UseMacroInEnglishMode;
+@property (weak) IBOutlet NSButton *SuggestMacro;
 
 @property (weak) IBOutlet NSButton *UpperCaseFirstChar;
 @property (weak) IBOutlet NSButton *QuickStartConsonant;

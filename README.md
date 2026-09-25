@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.2.dmg">
+  <a href="https://github.com/dinhphu-0124/MacKey/releases/latest/download/MacKey-1.0.3.dmg">
     <img src="https://img.shields.io/badge/⬇️_Tải_bản_cài_đặt_MacKey_ngay-.dmg_(Miễn_phí)-2ea44f?style=for-the-badge&logo=apple&logoColor=white" alt="Tải MacKey ngay" />
   </a>
   <br/>
@@ -104,6 +104,7 @@ Giao diện Bảng điều khiển được tổ chức khoa học thành 4 tab 
 * **Cho phép gõ tắt:** Bật/tắt toàn bộ tính năng viết tắt.
 * **Gõ tắt cả khi ở chế độ Tiếng Anh:** Giúp bạn gõ từ viết tắt bất kỳ lúc nào.
 * **Tự động viết hoa theo phím tắt:** Gõ `Btw` → ra *By the way*, gõ `BTW` → ra *BY THE WAY*.
+* **Hiển thị gợi ý khi gõ từ tắt:** Tự động hiển thị bong bóng gợi ý từ hoàn chỉnh nổi ngay trên con trỏ chuột khi đang gõ từ tắt.
 * **Gõ nhanh phụ âm đôi:** `cc` → `ch`, `gg` → `gi`, `kk` → `kh`, `nn` → `ng`, `qq` → `qu`, `pp` → `ph`, `tt` → `th`.
 * **Gõ tắt phụ âm đầu/cuối:** Viết nhanh `f` → `ph`, `j` → `gi`, `w` → `qu`, `g` → `ng`, `h` → `nh`...
 * Nút **"Mở bảng gõ tắt..."** để quản lý danh sách từ tắt chi tiết.
@@ -150,6 +151,24 @@ Cửa sổ "Thiết lập gõ tắt" được thiết kế tối ưu với khả
 <p align="center">
   <img src="assets/macro_export.png" width="340" alt="Hộp thoại Xuất file Excel/CSV" />
 </p>
+
+* **Gợi ý từ gõ tắt nổi & Viết hoa thông minh theo ngữ cảnh (Mới trong v1.0.3):**
+  - **Bong bóng gợi ý tức thì:** Khi gõ một từ tắt (ví dụ `cty`, `sn`, `stkbidv`, `hp`...), một bong bóng gợi ý nhỏ gọn, bo góc mềm mại sẽ tự động hiển thị ngay phía trên con trỏ soạn thảo:
+
+<p align="center">
+  <img src="assets/macro_suggestion.png" width="220" alt="Bong bóng gợi ý gõ tắt nổi" />
+</p>
+
+  - **Thao tác thuận tiện:**
+    + Nhấn phím **Space (khoảng trắng)**: Tự động chuyển đổi từ tắt thành từ ngữ hoàn chỉnh và ẩn gợi ý tức thì.
+    + Nhấn phím **Escape (Esc)** hoặc click nút **`✕`**: Ẩn gợi ý và bỏ qua chuyển đổi cho từ đó (nhấn Space sau đó chỉ thêm khoảng trắng bình thường mà không biến đổi từ).
+  - **Quy tắc viết hoa thông minh theo vị trí câu:**
+    + **Đầu câu:** Tự động viết hoa chữ cái đầu tiên khi bắt đầu gõ hoặc sau các dấu kết thúc câu (`.`, `!`, `?` kèm Space/Enter).
+      * *Ví dụ:* `cty không ổn lắm` ➔ `Công ty không ổn lắm`
+      * *Ví dụ:* `tôi khỏe! bt` ➔ `tôi khỏe! Bình thường`
+    + **Giữa câu:** Tự động chuyển chữ cái đầu tiên thành chữ thường khi đứng ở giữa câu hoặc sau dấu phẩy (ngay cả khi từ gốc trong từ điển được lưu dạng chữ hoa).
+      * *Ví dụ:* Từ tắt `hp` (lưu là `Hạnh phúc`), khi gõ `Hôm nay, tôi hp` ➔ `Hôm nay, tôi hạnh phúc`
+    + **Tôn trọng phím Shift:** Khi người dùng chủ động gõ phím viết hoa bằng Shift (ví dụ `Hp` hoặc `HP`), MacKey luôn tôn trọng và giữ nguyên ý định viết hoa của người dùng.
 
 ---
 
@@ -214,7 +233,7 @@ Mở từ Menu bar → **Giới thiệu**:
 
 ### Bước 1: Tải về và cài đặt từ file DMG
 
-1. Truy cập [Trang Releases của MacKey](https://github.com/dinhphu-0124/MacKey/releases/latest) và tải file **`MacKey-1.0.2.dmg`**.
+1. Truy cập [Trang Releases của MacKey](https://github.com/dinhphu-0124/MacKey/releases/latest) và tải file **`MacKey-1.0.3.dmg`**.
 2. Nhấp đúp chuột (double-click) vào file `.dmg` vừa tải về để mở cửa sổ cài đặt.
 3. **Kéo biểu tượng MacKey** ở bên trái và **thả vào thư mục Applications** ở bên phải:
 

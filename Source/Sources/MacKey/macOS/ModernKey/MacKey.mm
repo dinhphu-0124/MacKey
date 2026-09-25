@@ -2,6 +2,7 @@
 #import "Engine.h"
 #import "MacKeyManager.h"
 #import "ViewController.h"
+#import "MacroSuggestionController.h"
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
 
@@ -141,6 +142,7 @@ bool _hasJustUsedHotKey = false;
 
 void MacKeyInit() {
   // load saved data
+  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   vFreeMark = 0; //(int)[[NSUserDefaults standardUserDefaults]
                  // integerForKey:@"FreeMark"];
   LOAD_DATA(vCodeTable, CodeTable);
@@ -153,6 +155,11 @@ void MacKeyInit() {
   LOAD_DATA(vUseMacro, UseMacro);
   LOAD_DATA(vUseMacroInEnglishMode, UseMacroInEnglishMode);
   LOAD_DATA(vAutoCapsMacro, vAutoCapsMacro);
+  if ([prefs objectForKey:@"suggestMacro"] != nil) {
+    LOAD_DATA(vSuggestMacro, suggestMacro);
+  } else {
+    vSuggestMacro = 1;
+  }
   LOAD_DATA(vUpperCaseFirstChar, UpperCaseFirstChar);
 
   LOAD_DATA(vTempOffSpelling, vTempOffSpelling);
@@ -169,7 +176,6 @@ void MacKeyInit() {
   eventBackSpaceUp = CGEventCreateKeyboardEvent(myEventSource, 51, false);
 
   // init and load macro data
-  NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
   NSData *data = [prefs objectForKey:@"macroData"];
   initMacroMap((Byte *)data.bytes, (int)data.length);
 
@@ -555,6 +561,7 @@ void switchLanguage() {
 }
 
 void handleMacro() {
+  [[MacroSuggestionController sharedController] hideSuggestion];
   // send backspace
   if (pData->backspaceCount > 0) {
     for (int i = 0; i < pData->backspaceCount; i++) {
@@ -700,6 +707,10 @@ CGEventRef MacKeyCallback(CGEventTapProxy proxy, CGEventType type,
   // If is in english mode
   if (vLanguage == 0) {
     if (vUseMacro && vUseMacroInEnglishMode && type == kCGEventKeyDown) {
+      if (_keycode == KEY_ESC && [[MacroSuggestionController sharedController] isVisible]) {
+        [[MacroSuggestionController sharedController] dismissByUser];
+        return NULL;
+      }
       vEnglishMode((type == kCGEventKeyDown ? vKeyEventState::KeyDown
                                             : vKeyEventState::MouseDown),
                    _keycode,
@@ -711,6 +722,17 @@ CGEventRef MacKeyCallback(CGEventTapProxy proxy, CGEventType type,
         handleMacro();
         return NULL;
       }
+
+      if (vSuggestMacro) {
+        string shortcut, content;
+        if (vCheckMacroSuggestion(shortcut, content)) {
+          NSString *nsContent = [NSString stringWithUTF8String:content.c_str()];
+          NSString *nsShortcut = [NSString stringWithUTF8String:shortcut.c_str()];
+          [[MacroSuggestionController sharedController] showSuggestion:nsContent shortcut:nsShortcut];
+        } else {
+          [[MacroSuggestionController sharedController] hideSuggestion];
+        }
+      }
     }
     return event;
   }
@@ -718,18 +740,35 @@ CGEventRef MacKeyCallback(CGEventTapProxy proxy, CGEventType type,
   // handle mouse
   if (type == kCGEventLeftMouseDown || type == kCGEventRightMouseDown ||
       type == kCGEventLeftMouseDragged || type == kCGEventRightMouseDragged) {
+    [[MacroSuggestionController sharedController] hideSuggestion];
     RequestNewSession();
     return event;
   }
 
   // handle keyboard
   if (type == kCGEventKeyDown) {
+    if (_keycode == KEY_ESC && [[MacroSuggestionController sharedController] isVisible]) {
+      [[MacroSuggestionController sharedController] dismissByUser];
+      return NULL;
+    }
     // send event signal to Engine
     vKeyHandleEvent(vKeyEvent::Keyboard, vKeyEventState::KeyDown, _keycode,
                     _flag & kCGEventFlagMaskShift
                         ? 1
                         : (_flag & kCGEventFlagMaskAlphaShift ? 2 : 0),
                     OTHER_CONTROL_KEY);
+
+    if (vUseMacro && vSuggestMacro && pData->code != vReplaceMaro) {
+      string shortcut, content;
+      if (vCheckMacroSuggestion(shortcut, content)) {
+        NSString *nsContent = [NSString stringWithUTF8String:content.c_str()];
+        NSString *nsShortcut = [NSString stringWithUTF8String:shortcut.c_str()];
+        [[MacroSuggestionController sharedController] showSuggestion:nsContent shortcut:nsShortcut];
+      } else {
+        [[MacroSuggestionController sharedController] hideSuggestion];
+      }
+    }
+
     if (pData->code == vDoNothing) {    // do nothing
       if (IS_DOUBLE_CODE(vCodeTable)) { // VNI
         if (pData->extCode == 1) {      // break key

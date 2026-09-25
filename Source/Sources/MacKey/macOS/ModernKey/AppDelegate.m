@@ -32,6 +32,7 @@ int vTempOffSpelling = 0;
 int vAllowConsonantZFWJ = 0;
 int vQuickStartConsonant = 0;
 int vQuickEndConsonant = 0;
+int vSuggestMacro = 1;
 
 int vShowIconOnDock = 0; //new on version 2.0
 
@@ -299,6 +300,7 @@ extern bool convertToolDontAlertWhenCompleted;
     vQuickEndConsonant = 0;[[NSUserDefaults standardUserDefaults] setInteger:vQuickEndConsonant forKey:@"vQuickEndConsonant"];
     vShowIconOnDock = 0;[[NSUserDefaults standardUserDefaults] setInteger:vShowIconOnDock forKey:@"vShowIconOnDock"];
     vPerformLayoutCompat = 0;[[NSUserDefaults standardUserDefaults] setInteger:vPerformLayoutCompat forKey:@"vPerformLayoutCompat"];
+    vSuggestMacro = 1;[[NSUserDefaults standardUserDefaults] setInteger:vSuggestMacro forKey:@"suggestMacro"];
     MacKeyStateUnlock();
 
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"GrayIcon"];

@@ -29,6 +29,8 @@ void getMacroSaveData(vector<Byte>& outData);
  * Use to find full text by macro
  */
 bool findMacro(vector<Uint32>& key, vector<Uint32>& macroContentCode);
+bool findMacroWithContext(vector<Uint32>& key, vector<Uint32>& macroContentCode, bool isStartOfSentence);
+bool peekMacroWithContext(const vector<Uint32>& key, string& outMacroText, string& outMacroContent, bool isStartOfSentence);
 
 /**
  * check has this macro or not

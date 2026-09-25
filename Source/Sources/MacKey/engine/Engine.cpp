@@ -107,6 +107,10 @@ static bool _useSpellCheckingBefore;
 static bool _hasHandleQuickConsonant;
 static bool _willTempOffEngine = false;
 
+static bool _isStartOfSentence = true;
+static bool _sentenceBreakPending = false;
+static bool _macroSuggestionDismissed = false;
+
 //function prototype
 void findAndCalculateVowel(const bool& forGrammar=false);
 void insertMark(const Uint32& markMask, const bool& canModifyFlag=true);
@@ -128,6 +132,9 @@ void* vKeyInit() {
     _typingStates.clear();
     _longWordHelper.clear();
     _upperCaseStatus = 0;
+    _isStartOfSentence = true;
+    _sentenceBreakPending = false;
+    _macroSuggestionDismissed = false;
     return &HookState;
 }
 
@@ -451,6 +458,7 @@ void startNewSession() {
     _stateIndex = 0;
     _hasHandledMacro = false;
     _hasHandleQuickConsonant = false;
+    _macroSuggestionDismissed = false;
     _longWordHelper.clear();
 }
 
@@ -1275,27 +1283,55 @@ void vEnglishMode(const vKeyEventState& state, const Uint16& data, const bool& i
     if (state == vKeyEventState::MouseDown || (otherControlKey && !isCaps)) {
         hMacroKey.clear();
         _willTempOffEngine = false;
+        _macroSuggestionDismissed = false;
+        _isStartOfSentence = true;
+        _sentenceBreakPending = false;
     } else if (data == KEY_SPACE) {
-        if (!_hasHandledMacro && findMacro(hMacroKey, hMacroData)) {
+        if (_macroSuggestionDismissed) {
+            _macroSuggestionDismissed = false;
+        } else if (!_hasHandledMacro && findMacroWithContext(hMacroKey, hMacroData, _isStartOfSentence)) {
             hCode = vReplaceMaro;
             hBPC = (Byte)hMacroKey.size();
         }
         hMacroKey.clear();
         _willTempOffEngine = false;
+        if (_sentenceBreakPending) {
+            _isStartOfSentence = true;
+            _sentenceBreakPending = false;
+        } else {
+            _isStartOfSentence = false;
+        }
     } else if (data == KEY_DELETE) {
         if (hMacroKey.size() > 0) {
             hMacroKey.pop_back();
         } else {
             _willTempOffEngine = false;
         }
+        _macroSuggestionDismissed = false;
+    } else if (data == KEY_ENTER || data == KEY_RETURN) {
+        _isStartOfSentence = true;
+        _sentenceBreakPending = false;
+        _macroSuggestionDismissed = false;
+        hMacroKey.clear();
+        _willTempOffEngine = false;
     } else {
+        if ((data == KEY_DOT && !isCaps) || (data == KEY_SLASH && isCaps) || (data == KEY_1 && isCaps)) {
+            _sentenceBreakPending = true;
+        }
         if (isWordBreak(vKeyEvent::Keyboard, state, data) &&
             std::find(_charKeyCode.begin(), _charKeyCode.end(), data) == _charKeyCode.end()) {
             hMacroKey.clear();
             _willTempOffEngine = false;
+            _macroSuggestionDismissed = false;
+            if (data != KEY_DOT && data != KEY_SLASH && data != KEY_1) {
+                _sentenceBreakPending = false;
+                _isStartOfSentence = false;
+            }
         } else {
-            if (!_willTempOffEngine)
+            if (!_willTempOffEngine) {
                 hMacroKey.push_back(data | (isCaps ? CAPS_MASK : 0));
+                _macroSuggestionDismissed = false;
+            }
         }
     }
 }
@@ -1315,10 +1351,14 @@ void vKeyHandleEvent(const vKeyEvent& event,
         hExt = 1; //word break
         
         //check macro feature
-        if (vUseMacro && isMacroBreakCode(data) && !_hasHandledMacro && findMacro(hMacroKey, hMacroData)) {
-            hCode = vReplaceMaro;
-            hBPC = (Byte)hMacroKey.size();
-            _hasHandledMacro = true;
+        if (vUseMacro && isMacroBreakCode(data) && !_hasHandledMacro) {
+            if (_macroSuggestionDismissed) {
+                _macroSuggestionDismissed = false;
+            } else if (findMacroWithContext(hMacroKey, hMacroData, _isStartOfSentence)) {
+                hCode = vReplaceMaro;
+                hBPC = (Byte)hMacroKey.size();
+                _hasHandledMacro = true;
+            }
         } else if ((vQuickStartConsonant || vQuickEndConsonant) && !tempDisableKey && isMacroBreakCode(data)) {
             checkQuickConsonant();
         } else if (vRestoreIfWrongSpelling && isWordBreak(event, state, data)) { //restore key if wrong spelling with break-key
@@ -1357,9 +1397,35 @@ void vKeyHandleEvent(const vKeyEvent& event,
         if (vUseMacro) {
             if (_isCharKeyCode) {
                 hMacroKey.push_back(data | (_isCaps ? CAPS_MASK : 0));
+                _macroSuggestionDismissed = false;
             } else {
                 hMacroKey.clear();
             }
+        }
+        
+        if (event == vKeyEvent::Mouse) {
+            _isStartOfSentence = true;
+            _sentenceBreakPending = false;
+            _macroSuggestionDismissed = false;
+            hMacroKey.clear();
+        } else if (otherControlKey) {
+            _sentenceBreakPending = false;
+            _macroSuggestionDismissed = false;
+            hMacroKey.clear();
+            _isStartOfSentence = true;
+        } else if (data == KEY_ENTER || data == KEY_RETURN) {
+            _isStartOfSentence = true;
+            _sentenceBreakPending = false;
+            _macroSuggestionDismissed = false;
+            hMacroKey.clear();
+        } else if ((data == KEY_DOT && !_isCaps) || (data == KEY_SLASH && _isCaps) || (data == KEY_1 && _isCaps)) {
+            _sentenceBreakPending = true;
+        } else if (data == KEY_COMMA || data == KEY_SEMICOLON || data == KEY_QUOTE) {
+            _sentenceBreakPending = false;
+            _isStartOfSentence = false;
+        } else if (!_isCharKeyCode) {
+            _sentenceBreakPending = false;
+            _isStartOfSentence = false;
         }
         
         if (vUpperCaseFirstChar) {
@@ -1374,11 +1440,15 @@ void vKeyHandleEvent(const vKeyEvent& event,
         if (!tempDisableKey && vCheckSpelling) {
             checkSpelling(true); //force check spelling
         }
-        if (vUseMacro && !_hasHandledMacro && findMacro(hMacroKey, hMacroData)) { //macro
-            hCode = vReplaceMaro;
-            hBPC = (Byte)hMacroKey.size();
-            _spaceCount++;
-            _hasHandledMacro = true;
+        if (vUseMacro && !_hasHandledMacro) {
+            if (_macroSuggestionDismissed) {
+                _macroSuggestionDismissed = false;
+            } else if (findMacroWithContext(hMacroKey, hMacroData, _isStartOfSentence)) { //macro
+                hCode = vReplaceMaro;
+                hBPC = (Byte)hMacroKey.size();
+                _spaceCount++;
+                _hasHandledMacro = true;
+            }
         } else if ((vQuickStartConsonant || vQuickEndConsonant) && !tempDisableKey && checkQuickConsonant()) {
             _spaceCount++;
         } else if (vRestoreIfWrongSpelling && tempDisableKey && !_hasHandledMacro) { //restore key if wrong spelling
@@ -1392,6 +1462,12 @@ void vKeyHandleEvent(const vKeyEvent& event,
         }
         if (vUseMacro) {
             hMacroKey.clear();
+        }
+        if (_sentenceBreakPending) {
+            _isStartOfSentence = true;
+            _sentenceBreakPending = false;
+        } else {
+            _isStartOfSentence = false;
         }
         if (vUpperCaseFirstChar && _upperCaseStatus == 1) {
             _upperCaseStatus = 2;
@@ -1451,11 +1527,20 @@ void vKeyHandleEvent(const vKeyEvent& event,
                 startNewSession();
                 _specialChar.clear();
                 restoreLastTypingState();
+                if (_specialChar.size() == 0 && _spaceCount == 0) {
+                    _isStartOfSentence = true;
+                    _sentenceBreakPending = false;
+                }
             } else { //August 23rd continue check grammar
                 checkGrammar(1);
             }
         }
     } else { //START AND CHECK KEY
+        if (_sentenceBreakPending) {
+            _isStartOfSentence = true;
+            _sentenceBreakPending = false;
+        }
+        _macroSuggestionDismissed = false;
         if (_willTempOffEngine) {
             hCode = vDoNothing;
             hExt = 3;
@@ -1547,4 +1632,19 @@ void vKeyHandleEvent(const vKeyEvent& event,
     //cout<<"index "<<(int)_index<< ", stateIndex "<<(int)_stateIndex<<", word "<<_typingStates.size()<<", long word "<<_longWordHelper.size()<< endl;
     //cout<<"backspace "<<(int)hBPC<<endl;
     //cout<<"new char "<<(int)hNCC<<endl<<endl;
+}
+
+bool vCheckMacroSuggestion(string& outShortcut, string& outContent) {
+    if (_macroSuggestionDismissed || hMacroKey.empty()) {
+        return false;
+    }
+    return peekMacroWithContext(hMacroKey, outShortcut, outContent, _isStartOfSentence);
+}
+
+void vDismissMacroSuggestion() {
+    _macroSuggestionDismissed = true;
+}
+
+bool vIsMacroSuggestionDismissed() {
+    return _macroSuggestionDismissed;
 }
