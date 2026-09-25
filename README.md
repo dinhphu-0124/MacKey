@@ -135,7 +135,7 @@ Cửa sổ "Thiết lập gõ tắt" được thiết kế tối ưu với khả
 </p>
 
 * **Huy hiệu số lượng & Xoá tất cả an toàn:**
-  - Góc phải dưới cùng hiển thị huy hiệu số lượng: `[📖] [77 từ tắt]`.
+  - Góc phải dưới cùng hiển thị huy hiệu số lượng: `[📖] [76 từ tắt]`.
   - Icon thùng rác kế bên cho phép xoá tất cả dữ liệu gõ tắt hiện có với hộp thoại xác nhận chuyên nghiệp, icon và tiêu đề căn giữa:
 
 <p align="center">
